@@ -1,11 +1,11 @@
-import '../../models/event_model.dart';
+﻿import '../../models/event_model.dart';
 import '../../models/venue_model.dart';
 import '../../models/user_model.dart';
 import '../../models/booking_model.dart';
 import '../../models/ticket_model.dart';
 
 class MockData {
-  // ─── VENUES ────────────────────────────────────────────
+  // â”€â”€â”€ VENUES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   static final List<VenueModel> venues = [
     VenueModel(
       id: 'v1',
@@ -13,7 +13,7 @@ class MockData {
       city: 'New York',
       address: '4 Pennsylvania Plaza, New York, NY 10001',
       capacity: 20000,
-      imageUrl: 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=800',
+      imageUrl: 'assets/images/venue_madison_sg.jpg',
       rows: 10,
       seatsPerRow: 12,
     ),
@@ -23,7 +23,7 @@ class MockData {
       city: 'London',
       address: 'Peninsula Square, London SE10 0DX',
       capacity: 20000,
-      imageUrl: 'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=800',
+      imageUrl: 'assets/images/venue_o2_arena.jpg',
       rows: 10,
       seatsPerRow: 12,
     ),
@@ -33,7 +33,7 @@ class MockData {
       city: 'Los Angeles',
       address: '1111 S Figueroa St, Los Angeles, CA 90015',
       capacity: 21000,
-      imageUrl: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800',
+      imageUrl: 'assets/images/venue_staples_center.jpg',
       rows: 8,
       seatsPerRow: 10,
     ),
@@ -43,7 +43,7 @@ class MockData {
       city: 'London',
       address: 'London HA9 0WS, United Kingdom',
       capacity: 90000,
-      imageUrl: 'https://images.unsplash.com/photo-1522158637959-30385a09e0da?w=800',
+      imageUrl: 'assets/images/venue_wembley.jpg',
       rows: 12,
       seatsPerRow: 14,
     ),
@@ -53,7 +53,7 @@ class MockData {
       city: 'Sydney',
       address: 'Bennelong Point, Sydney NSW 2000',
       capacity: 5738,
-      imageUrl: 'https://images.unsplash.com/photo-1523059623039-a9ed027e7fad?w=800',
+      imageUrl: 'assets/images/venue_sydney_opera.jpg',
       rows: 8,
       seatsPerRow: 10,
     ),
@@ -63,18 +63,18 @@ class MockData {
       city: 'Denver',
       address: '18300 W Alameda Pkwy, Morrison, CO 80465',
       capacity: 9525,
-      imageUrl: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=800',
+      imageUrl: 'assets/images/venue_red_rocks.jpg',
       rows: 10,
       seatsPerRow: 12,
     ),
   ];
 
-  // ─── EVENTS ────────────────────────────────────────────
+  // â”€â”€â”€ EVENTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   static final List<EventModel> events = [
     EventModel(
       id: 'e1',
       title: 'Taylor Swift - Eras Tour',
-      imageUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800',
+      imageUrl: 'assets/images/event_taylor_swift.jpg',
       category: 'Concerts',
       date: DateTime(2026, 3, 15),
       time: '7:00 PM',
@@ -97,7 +97,7 @@ class MockData {
     EventModel(
       id: 'e2',
       title: 'Coldplay - Music of the Spheres',
-      imageUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800',
+      imageUrl: 'assets/images/event_coldplay.jpg',
       category: 'Concerts',
       date: DateTime(2026, 3, 22),
       time: '8:00 PM',
@@ -120,7 +120,7 @@ class MockData {
     EventModel(
       id: 'e3',
       title: 'NBA Finals - Game 7',
-      imageUrl: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800',
+      imageUrl: 'assets/images/event_nba_finals.jpg',
       category: 'Sports',
       date: DateTime(2026, 6, 18),
       time: '9:00 PM',
@@ -144,7 +144,7 @@ class MockData {
     EventModel(
       id: 'e4',
       title: 'Hamilton - Musical',
-      imageUrl: 'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=800',
+      imageUrl: 'assets/images/event_hamilton.jpg',
       category: 'Theatre',
       date: DateTime(2026, 4, 5),
       time: '2:00 PM',
@@ -167,7 +167,7 @@ class MockData {
     EventModel(
       id: 'e5',
       title: 'Dave Chappelle - Live',
-      imageUrl: 'https://images.unsplash.com/photo-1585699324551-f6c309eedeca?w=800',
+      imageUrl: 'assets/images/event_dave_chappelle.jpg',
       category: 'Comedy',
       date: DateTime(2026, 3, 28),
       time: '9:30 PM',
@@ -189,7 +189,7 @@ class MockData {
     EventModel(
       id: 'e6',
       title: 'Coachella Music Festival 2026',
-      imageUrl: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800',
+      imageUrl: 'assets/images/event_coachella.jpg',
       category: 'Festivals',
       date: DateTime(2026, 4, 10),
       time: '12:00 PM',
@@ -212,7 +212,7 @@ class MockData {
     EventModel(
       id: 'e7',
       title: 'Disney on Ice - Frozen',
-      imageUrl: 'https://images.unsplash.com/photo-1513106580091-1d82408b8cd6?w=800',
+      imageUrl: 'assets/images/event_disney_on_ice.jpg',
       category: 'Family',
       date: DateTime(2026, 5, 1),
       time: '3:00 PM',
@@ -235,7 +235,7 @@ class MockData {
     EventModel(
       id: 'e8',
       title: 'UFC 300 - Championship Night',
-      imageUrl: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=800',
+      imageUrl: 'assets/images/event_ufc.jpg',
       category: 'Sports',
       date: DateTime(2026, 4, 20),
       time: '10:00 PM',
@@ -258,7 +258,7 @@ class MockData {
     EventModel(
       id: 'e9',
       title: 'Ed Sheeran - Mathematics Tour',
-      imageUrl: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=800',
+      imageUrl: 'assets/images/event_ed_sheeran.jpg',
       category: 'Concerts',
       date: DateTime(2026, 5, 15),
       time: '7:30 PM',
@@ -281,7 +281,7 @@ class MockData {
     EventModel(
       id: 'e10',
       title: 'Trevor Noah - Off the Record',
-      imageUrl: 'https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=800',
+      imageUrl: 'assets/images/event_trevor_noah.jpg',
       category: 'Comedy',
       date: DateTime(2026, 3, 30),
       time: '8:00 PM',
@@ -303,7 +303,7 @@ class MockData {
     EventModel(
       id: 'e11',
       title: 'Wimbledon Finals 2026',
-      imageUrl: 'https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=800',
+      imageUrl: 'assets/images/event_wimbledon.jpg',
       category: 'Sports',
       date: DateTime(2026, 7, 12),
       time: '2:00 PM',
@@ -326,7 +326,7 @@ class MockData {
     EventModel(
       id: 'e12',
       title: 'The Lion King - Broadway',
-      imageUrl: 'https://images.unsplash.com/photo-1503095396549-807759245b35?w=800',
+      imageUrl: 'assets/images/event_lion_king.jpg',
       category: 'Theatre',
       date: DateTime(2026, 4, 15),
       time: '7:30 PM',
@@ -349,14 +349,14 @@ class MockData {
     EventModel(
       id: 'e13',
       title: 'Electric Daisy Carnival',
-      imageUrl: 'https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=800',
+      imageUrl: 'assets/images/event_edc.jpg',
       category: 'Festivals',
       date: DateTime(2026, 5, 22),
       time: '5:00 PM',
       venueId: 'v3',
       venueName: 'Las Vegas Motor Speedway',
       city: 'Las Vegas',
-      artists: ['Tiësto', 'Martin Garrix', 'Zedd', 'Marshmello'],
+      artists: ['TiÃ«sto', 'Martin Garrix', 'Zedd', 'Marshmello'],
       description:
           'The world\'s largest dance music festival transforms the Las Vegas Motor Speedway into a neon wonderland. Three nights of electronic music across 8 stages with carnival rides and art installations.',
       ticketTiers: [
@@ -371,14 +371,14 @@ class MockData {
     ),
   ];
 
-  // ─── USERS ─────────────────────────────────────────────
+  // â”€â”€â”€ USERS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   static final List<UserModel> users = [
     UserModel(
       id: 'u1',
       fullName: 'Admin User',
       email: 'admin@app.com',
       phone: '+1 555-0100',
-      avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200',
+      avatarUrl: 'assets/images/avatar_admin.jpg',
       isAdmin: true,
       joinDate: DateTime(2024, 1, 1),
       bookingCount: 5,
@@ -388,7 +388,7 @@ class MockData {
       fullName: 'John Doe',
       email: 'john@example.com',
       phone: '+1 555-0101',
-      avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200',
+      avatarUrl: 'assets/images/avatar_john.jpg',
       joinDate: DateTime(2024, 6, 15),
       bookingCount: 12,
     ),
@@ -397,7 +397,7 @@ class MockData {
       fullName: 'Sarah Connor',
       email: 'sarah@example.com',
       phone: '+1 555-0102',
-      avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200',
+      avatarUrl: 'assets/images/avatar_sarah.jpg',
       joinDate: DateTime(2024, 8, 22),
       bookingCount: 8,
     ),
@@ -406,7 +406,7 @@ class MockData {
       fullName: 'Mike Johnson',
       email: 'mike@example.com',
       phone: '+1 555-0103',
-      avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200',
+      avatarUrl: 'assets/images/avatar_mike.jpg',
       joinDate: DateTime(2025, 1, 10),
       bookingCount: 3,
     ),
@@ -415,7 +415,7 @@ class MockData {
       fullName: 'Emily Davis',
       email: 'emily@example.com',
       phone: '+1 555-0104',
-      avatarUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200',
+      avatarUrl: 'assets/images/avatar_emily.jpg',
       joinDate: DateTime(2025, 2, 28),
       bookingCount: 15,
     ),
@@ -424,7 +424,7 @@ class MockData {
       fullName: 'Carlos Rodriguez',
       email: 'carlos@example.com',
       phone: '+1 555-0105',
-      avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200',
+      avatarUrl: 'assets/images/avatar_carlos.jpg',
       joinDate: DateTime(2025, 3, 5),
       bookingCount: 6,
     ),
@@ -433,7 +433,7 @@ class MockData {
       fullName: 'Aisha Patel',
       email: 'aisha@example.com',
       phone: '+44 7700-900123',
-      avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200',
+      avatarUrl: 'assets/images/avatar_aisha.jpg',
       joinDate: DateTime(2025, 4, 12),
       bookingCount: 9,
     ),
@@ -442,7 +442,7 @@ class MockData {
       fullName: 'James Wilson',
       email: 'james@example.com',
       phone: '+1 555-0106',
-      avatarUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200',
+      avatarUrl: 'assets/images/avatar_james.jpg',
       joinDate: DateTime(2025, 5, 20),
       bookingCount: 2,
     ),
@@ -451,7 +451,7 @@ class MockData {
       fullName: 'Luna Kim',
       email: 'luna@example.com',
       phone: '+82 10-1234-5678',
-      avatarUrl: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200',
+      avatarUrl: 'assets/images/avatar_luna.jpg',
       joinDate: DateTime(2025, 7, 1),
       bookingCount: 11,
     ),
@@ -460,13 +460,13 @@ class MockData {
       fullName: 'David Brown',
       email: 'david@example.com',
       phone: '+1 555-0107',
-      avatarUrl: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=200',
+      avatarUrl: 'assets/images/avatar_david.jpg',
       joinDate: DateTime(2025, 8, 15),
       bookingCount: 4,
     ),
   ];
 
-  // ─── BOOKINGS ──────────────────────────────────────────
+  // â”€â”€â”€ BOOKINGS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   static final List<BookingModel> bookings = [
     BookingModel(
       id: 'b1',
@@ -475,7 +475,7 @@ class MockData {
       userEmail: 'john@example.com',
       eventId: 'e1',
       eventTitle: 'Taylor Swift - Eras Tour',
-      eventImageUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800',
+      eventImageUrl: 'assets/images/event_taylor_swift.jpg',
       venue: 'Madison Square Garden',
       eventDate: DateTime(2026, 3, 15),
       tierName: 'VIP',
@@ -496,7 +496,7 @@ class MockData {
       userEmail: 'sarah@example.com',
       eventId: 'e2',
       eventTitle: 'Coldplay - Music of the Spheres',
-      eventImageUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800',
+      eventImageUrl: 'assets/images/event_coldplay.jpg',
       venue: 'Wembley Stadium',
       eventDate: DateTime(2026, 3, 22),
       tierName: 'General',
@@ -518,7 +518,7 @@ class MockData {
       userEmail: 'mike@example.com',
       eventId: 'e3',
       eventTitle: 'NBA Finals - Game 7',
-      eventImageUrl: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800',
+      eventImageUrl: 'assets/images/event_nba_finals.jpg',
       venue: 'Staples Center',
       eventDate: DateTime(2026, 6, 18),
       tierName: 'Lower Level',
@@ -539,7 +539,7 @@ class MockData {
       userEmail: 'emily@example.com',
       eventId: 'e4',
       eventTitle: 'Hamilton - Musical',
-      eventImageUrl: 'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=800',
+      eventImageUrl: 'assets/images/event_hamilton.jpg',
       venue: 'Sydney Opera House',
       eventDate: DateTime(2026, 4, 5),
       tierName: 'Orchestra',
@@ -560,7 +560,7 @@ class MockData {
       userEmail: 'john@example.com',
       eventId: 'e5',
       eventTitle: 'Dave Chappelle - Live',
-      eventImageUrl: 'https://images.unsplash.com/photo-1585699324551-f6c309eedeca?w=800',
+      eventImageUrl: 'assets/images/event_dave_chappelle.jpg',
       venue: 'Red Rocks Amphitheatre',
       eventDate: DateTime(2026, 3, 28),
       tierName: 'Reserved',
@@ -582,7 +582,7 @@ class MockData {
       userEmail: 'carlos@example.com',
       eventId: 'e6',
       eventTitle: 'Coachella Music Festival 2026',
-      eventImageUrl: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800',
+      eventImageUrl: 'assets/images/event_coachella.jpg',
       venue: 'Empire Polo Club',
       eventDate: DateTime(2026, 4, 10),
       tierName: 'GA Pass',
@@ -603,7 +603,7 @@ class MockData {
       userEmail: 'aisha@example.com',
       eventId: 'e9',
       eventTitle: 'Ed Sheeran - Mathematics Tour',
-      eventImageUrl: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=800',
+      eventImageUrl: 'assets/images/event_ed_sheeran.jpg',
       venue: 'The O2 Arena',
       eventDate: DateTime(2026, 5, 15),
       tierName: 'General',
@@ -624,7 +624,7 @@ class MockData {
       userEmail: 'james@example.com',
       eventId: 'e7',
       eventTitle: 'Disney on Ice - Frozen',
-      eventImageUrl: 'https://images.unsplash.com/photo-1513106580091-1d82408b8cd6?w=800',
+      eventImageUrl: 'assets/images/event_disney_on_ice.jpg',
       venue: 'Madison Square Garden',
       eventDate: DateTime(2026, 5, 1),
       tierName: 'Standard',
@@ -645,7 +645,7 @@ class MockData {
       userEmail: 'luna@example.com',
       eventId: 'e8',
       eventTitle: 'UFC 300 - Championship Night',
-      eventImageUrl: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=800',
+      eventImageUrl: 'assets/images/event_ufc.jpg',
       venue: 'Staples Center',
       eventDate: DateTime(2026, 4, 20),
       tierName: 'Gold',
@@ -666,7 +666,7 @@ class MockData {
       userEmail: 'sarah@example.com',
       eventId: 'e10',
       eventTitle: 'Trevor Noah - Off the Record',
-      eventImageUrl: 'https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=800',
+      eventImageUrl: 'assets/images/event_trevor_noah.jpg',
       venue: 'Sydney Opera House',
       eventDate: DateTime(2026, 3, 30),
       tierName: 'Premium',
@@ -687,7 +687,7 @@ class MockData {
       userEmail: 'emily@example.com',
       eventId: 'e1',
       eventTitle: 'Taylor Swift - Eras Tour',
-      eventImageUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800',
+      eventImageUrl: 'assets/images/event_taylor_swift.jpg',
       venue: 'Madison Square Garden',
       eventDate: DateTime(2026, 3, 15),
       tierName: 'General',
@@ -708,7 +708,7 @@ class MockData {
       userEmail: 'david@example.com',
       eventId: 'e12',
       eventTitle: 'The Lion King - Broadway',
-      eventImageUrl: 'https://images.unsplash.com/photo-1503095396549-807759245b35?w=800',
+      eventImageUrl: 'assets/images/event_lion_king.jpg',
       venue: 'Minskoff Theatre',
       eventDate: DateTime(2026, 4, 15),
       tierName: 'Orchestra',
@@ -729,7 +729,7 @@ class MockData {
       userEmail: 'john@example.com',
       eventId: 'e11',
       eventTitle: 'Wimbledon Finals 2026',
-      eventImageUrl: 'https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=800',
+      eventImageUrl: 'assets/images/event_wimbledon.jpg',
       venue: 'All England Club',
       eventDate: DateTime(2026, 7, 12),
       tierName: 'Court Seat',
@@ -750,7 +750,7 @@ class MockData {
       userEmail: 'mike@example.com',
       eventId: 'e13',
       eventTitle: 'Electric Daisy Carnival',
-      eventImageUrl: 'https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=800',
+      eventImageUrl: 'assets/images/event_edc.jpg',
       venue: 'Las Vegas Motor Speedway',
       eventDate: DateTime(2026, 5, 22),
       tierName: '3-Day GA',
@@ -771,7 +771,7 @@ class MockData {
       userEmail: 'aisha@example.com',
       eventId: 'e2',
       eventTitle: 'Coldplay - Music of the Spheres',
-      eventImageUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800',
+      eventImageUrl: 'assets/images/event_coldplay.jpg',
       venue: 'Wembley Stadium',
       eventDate: DateTime(2026, 3, 22),
       tierName: 'VIP',
@@ -792,7 +792,7 @@ class MockData {
       userEmail: 'carlos@example.com',
       eventId: 'e5',
       eventTitle: 'Dave Chappelle - Live',
-      eventImageUrl: 'https://images.unsplash.com/photo-1585699324551-f6c309eedeca?w=800',
+      eventImageUrl: 'assets/images/event_dave_chappelle.jpg',
       venue: 'Red Rocks Amphitheatre',
       eventDate: DateTime(2026, 3, 28),
       tierName: 'General Admission',
@@ -813,7 +813,7 @@ class MockData {
       userEmail: 'luna@example.com',
       eventId: 'e4',
       eventTitle: 'Hamilton - Musical',
-      eventImageUrl: 'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=800',
+      eventImageUrl: 'assets/images/event_hamilton.jpg',
       venue: 'Sydney Opera House',
       eventDate: DateTime(2026, 4, 5),
       tierName: 'Premium',
@@ -835,7 +835,7 @@ class MockData {
       userEmail: 'david@example.com',
       eventId: 'e9',
       eventTitle: 'Ed Sheeran - Mathematics Tour',
-      eventImageUrl: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=800',
+      eventImageUrl: 'assets/images/event_ed_sheeran.jpg',
       venue: 'The O2 Arena',
       eventDate: DateTime(2026, 5, 15),
       tierName: 'VIP',
@@ -856,7 +856,7 @@ class MockData {
       userEmail: 'james@example.com',
       eventId: 'e3',
       eventTitle: 'NBA Finals - Game 7',
-      eventImageUrl: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800',
+      eventImageUrl: 'assets/images/event_nba_finals.jpg',
       venue: 'Staples Center',
       eventDate: DateTime(2026, 6, 18),
       tierName: 'Upper Level',
@@ -877,7 +877,7 @@ class MockData {
       userEmail: 'emily@example.com',
       eventId: 'e6',
       eventTitle: 'Coachella Music Festival 2026',
-      eventImageUrl: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800',
+      eventImageUrl: 'assets/images/event_coachella.jpg',
       venue: 'Empire Polo Club',
       eventDate: DateTime(2026, 4, 10),
       tierName: 'VIP Pass',
@@ -894,7 +894,7 @@ class MockData {
     ),
   ];
 
-  // ─── CATEGORIES ────────────────────────────────────────
+  // â”€â”€â”€ CATEGORIES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   static const List<String> categories = [
     'All',
     'Concerts',
@@ -905,36 +905,36 @@ class MockData {
     'Family',
   ];
 
-  // ─── TOP ARTISTS ───────────────────────────────────────
+  // â”€â”€â”€ TOP ARTISTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   static const List<Map<String, String>> topArtists = [
-    {'name': 'Taylor Swift', 'image': 'https://images.unsplash.com/photo-1516575150278-77136aed6920?w=200'},
-    {'name': 'Coldplay', 'image': 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=200'},
-    {'name': 'Ed Sheeran', 'image': 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=200'},
-    {'name': 'Bad Bunny', 'image': 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200'},
-    {'name': 'Billie Eilish', 'image': 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=200'},
-    {'name': 'Dave Chappelle', 'image': 'https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=200'},
+    {'name': 'Taylor Swift', 'image': 'assets/images/artist_taylor_swift.jpg'},
+    {'name': 'Coldplay', 'image': 'assets/images/artist_coldplay.jpg'},
+    {'name': 'Ed Sheeran', 'image': 'assets/images/artist_ed_sheeran.jpg'},
+    {'name': 'Bad Bunny', 'image': 'assets/images/event_taylor_swift.jpg'},
+    {'name': 'Billie Eilish', 'image': 'assets/images/artist_billie_eilish.jpg'},
+    {'name': 'Dave Chappelle', 'image': 'assets/images/event_trevor_noah.jpg'},
   ];
 
-  // ─── ONBOARDING DATA ──────────────────────────────────
+  // â”€â”€â”€ ONBOARDING DATA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   static const List<Map<String, String>> onboardingPages = [
     {
       'title': 'Discover Events Near You',
       'description': 'Find concerts, sports, theatre, comedy and more happening in your city.',
-      'image': 'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=800',
+      'image': 'assets/images/venue_o2_arena.jpg',
     },
     {
       'title': 'Choose Your Perfect Seat',
       'description': 'Interactive seat maps let you pick the best view for an unforgettable experience.',
-      'image': 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=800',
+      'image': 'assets/images/venue_madison_sg.jpg',
     },
     {
       'title': 'Book in Seconds',
       'description': 'Fast, secure checkout with multiple payment options. Your tickets, your way.',
-      'image': 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=800',
+      'image': 'assets/images/venue_red_rocks.jpg',
     },
   ];
 
-  // ─── CITIES ────────────────────────────────────────────
+  // â”€â”€â”€ CITIES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   static const List<String> cities = [
     'All Cities',
     'New York',
@@ -946,7 +946,7 @@ class MockData {
     'Indio',
   ];
 
-  // ─── TAKEN SEATS (pre-occupied for seat selection) ─────
+  // â”€â”€â”€ TAKEN SEATS (pre-occupied for seat selection) â”€â”€â”€â”€â”€
   static const List<String> takenSeats = [
     'A1', 'A2', 'A7', 'A8',
     'B3', 'B4', 'B9',

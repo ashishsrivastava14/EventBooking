@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import '../../core/widgets/app_image.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/custom_button.dart';
 import '../../providers/admin_provider.dart';
@@ -48,18 +48,10 @@ class AdminVenuesScreen extends StatelessWidget {
           ClipRRect(
             borderRadius:
                 const BorderRadius.vertical(top: Radius.circular(16)),
-            child: CachedNetworkImage(
+            child: AppImage(
               imageUrl: venue.imageUrl,
               height: 140,
               width: double.infinity,
-              fit: BoxFit.cover,
-              errorWidget: (_, __, ___) => Container(
-                height: 140,
-                color: AppColors.primary.withOpacity(0.3),
-                child: const Center(
-                    child: Icon(Icons.location_city,
-                        size: 48, color: Colors.white)),
-              ),
             ),
           ),
           Padding(

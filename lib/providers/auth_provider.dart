@@ -58,7 +58,7 @@ class AuthProvider extends ChangeNotifier {
           fullName: email.split('@').first,
           email: email,
           phone: '+1 555-0000',
-          avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200',
+          avatarUrl: 'assets/images/avatar_admin.jpg',
           joinDate: DateTime.now(),
         ),
       );
@@ -92,7 +92,7 @@ class AuthProvider extends ChangeNotifier {
       fullName: fullName,
       email: email,
       phone: phone,
-      avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200',
+      avatarUrl: 'assets/images/avatar_admin.jpg',
       joinDate: DateTime.now(),
     );
 

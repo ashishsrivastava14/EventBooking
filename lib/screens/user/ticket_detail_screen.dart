@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/widgets/app_image.dart';
 import '../../core/widgets/custom_button.dart';
 import '../../providers/booking_provider.dart';
 import '../../models/booking_model.dart';
@@ -53,19 +54,10 @@ class TicketDetailScreen extends StatelessWidget {
                   ClipRRect(
                     borderRadius:
                         const BorderRadius.vertical(top: Radius.circular(20)),
-                    child: Image.network(
-                      booking.eventImageUrl,
+                    child: AppImage(
+                      imageUrl: booking.eventImageUrl,
                       height: 150,
                       width: double.infinity,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => Container(
-                        height: 150,
-                        color: AppColors.primary,
-                        child: const Center(
-                          child: Icon(Icons.image,
-                              size: 48, color: Colors.white),
-                        ),
-                      ),
                     ),
                   ),
 

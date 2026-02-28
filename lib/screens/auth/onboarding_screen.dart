@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import '../../core/widgets/app_image.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/constants/mock_data.dart';
 import '../../core/widgets/custom_button.dart';
@@ -58,11 +58,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               return Stack(
                 fit: StackFit.expand,
                 children: [
-                  CachedNetworkImage(
+                  AppImage(
                     imageUrl: page['image']!,
-                    fit: BoxFit.cover,
-                    placeholder: (_, __) => Container(color: AppColors.backgroundDark),
-                    errorWidget: (_, __, ___) => Container(color: AppColors.backgroundDark),
                   ),
                   Container(
                     decoration: BoxDecoration(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../models/booking_model.dart';
 import '../theme/app_colors.dart';
+import 'app_image.dart';
 
 class TicketCard extends StatelessWidget {
   final BookingModel booking;
@@ -32,17 +33,10 @@ class TicketCard extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: Image.network(
-                      booking.eventImageUrl,
+                    child: AppImage(
+                      imageUrl: booking.eventImageUrl,
                       width: 70,
                       height: 70,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => Container(
-                        width: 70,
-                        height: 70,
-                        color: AppColors.surface,
-                        child: const Icon(Icons.image),
-                      ),
                     ),
                   ),
                   const SizedBox(width: 14),

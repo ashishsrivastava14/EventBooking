@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import '../../core/widgets/app_image.dart';
 import '../../core/theme/app_colors.dart';
 import '../../providers/auth_provider.dart';
 
@@ -36,7 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   CircleAvatar(
                     radius: 45,
                     backgroundImage: user != null
-                        ? CachedNetworkImageProvider(user.avatarUrl)
+                        ? AppImageProvider(user.avatarUrl)
                         : null,
                     child: user == null
                         ? const Icon(Icons.person, size: 40)

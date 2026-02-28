@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import '../../core/widgets/app_image.dart';
 import '../../core/theme/app_colors.dart';
 import '../../providers/admin_provider.dart';
 import '../../models/user_model.dart';
@@ -82,7 +82,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
       ),
       child: ExpansionTile(
         leading: CircleAvatar(
-          backgroundImage: CachedNetworkImageProvider(user.avatarUrl),
+          backgroundImage: AppImageProvider(user.avatarUrl),
         ),
         title: Row(
           children: [

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:carousel_slider_plus/carousel_slider_plus.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import '../../core/widgets/app_image.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../core/theme/app_colors.dart';
@@ -146,16 +146,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(16),
-                                    child: CachedNetworkImage(
+                                    child: AppImage(
                                       imageUrl: event.imageUrl,
-                                      fit: BoxFit.cover,
-                                      placeholder: (_, __) => Container(
-                                        color: AppColors.surface,
-                                      ),
-                                      errorWidget: (_, __, ___) => Container(
-                                        color: AppColors.surface,
-                                        child: const Icon(Icons.image, size: 48),
-                                      ),
                                     ),
                                   ),
                                   Container(
@@ -316,7 +308,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           CircleAvatar(
                             radius: 30,
                             backgroundImage:
-                                CachedNetworkImageProvider(artist['image']!),
+                                AppImageProvider(artist['image']!),
                           ),
                           const SizedBox(height: 8),
                           Text(
@@ -356,13 +348,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(12),
-                            child: CachedNetworkImage(
+                            child: AppImage(
                               imageUrl: venue.imageUrl,
-                              fit: BoxFit.cover,
-                              placeholder: (_, __) =>
-                                  Container(color: AppColors.surface),
-                              errorWidget: (_, __, ___) =>
-                                  Container(color: AppColors.surface),
                             ),
                           ),
                           Container(

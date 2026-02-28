@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/widgets/app_image.dart';
 import '../../providers/event_provider.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -79,17 +80,10 @@ class _SearchScreenState extends State<SearchScreen> {
                 return ListTile(
                   leading: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      event.imageUrl,
+                    child: AppImage(
+                      imageUrl: event.imageUrl,
                       width: 56,
                       height: 56,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => Container(
-                        width: 56,
-                        height: 56,
-                        color: AppColors.surface,
-                        child: const Icon(Icons.image),
-                      ),
                     ),
                   ),
                   title: Text(event.title),

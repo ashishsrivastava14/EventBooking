@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import '../../core/widgets/app_image.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/event_card.dart';
@@ -60,13 +60,8 @@ class _EventDetailScreenState extends State<EventDetailScreen>
               background: Stack(
                 fit: StackFit.expand,
                 children: [
-                  CachedNetworkImage(
+                  AppImage(
                     imageUrl: event.imageUrl,
-                    fit: BoxFit.cover,
-                    placeholder: (_, __) =>
-                        Container(color: AppColors.backgroundDark),
-                    errorWidget: (_, __, ___) =>
-                        Container(color: AppColors.backgroundDark),
                   ),
                   Container(
                     decoration: BoxDecoration(

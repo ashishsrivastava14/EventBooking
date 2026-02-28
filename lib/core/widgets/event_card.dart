@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'app_image.dart';
 import '../../models/event_model.dart';
 import '../theme/app_colors.dart';
 
@@ -46,21 +46,10 @@ class EventCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius:
                       const BorderRadius.vertical(top: Radius.circular(16)),
-                  child: CachedNetworkImage(
+                  child: AppImage(
                     imageUrl: event.imageUrl,
                     height: 180,
                     width: double.infinity,
-                    fit: BoxFit.cover,
-                    placeholder: (_, __) => Container(
-                      height: 180,
-                      color: isDark ? AppColors.surface : AppColors.cardLight,
-                      child: const Center(child: CircularProgressIndicator()),
-                    ),
-                    errorWidget: (_, __, ___) => Container(
-                      height: 180,
-                      color: isDark ? AppColors.surface : AppColors.cardLight,
-                      child: const Icon(Icons.image_not_supported, size: 48),
-                    ),
                   ),
                 ),
                 Positioned(
@@ -209,22 +198,10 @@ class EventCard extends StatelessWidget {
             ClipRRect(
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(16)),
-              child: CachedNetworkImage(
+              child: AppImage(
                 imageUrl: event.imageUrl,
                 height: 120,
                 width: 200,
-                fit: BoxFit.cover,
-                placeholder: (_, __) => Container(
-                  height: 120,
-                  width: 200,
-                  color: isDark ? AppColors.surface : AppColors.cardLight,
-                ),
-                errorWidget: (_, __, ___) => Container(
-                  height: 120,
-                  width: 200,
-                  color: isDark ? AppColors.surface : AppColors.cardLight,
-                  child: const Icon(Icons.image_not_supported),
-                ),
               ),
             ),
             Padding(
