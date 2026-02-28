@@ -28,12 +28,15 @@ class EventProvider extends ChangeNotifier {
 
   List<EventModel> get weekendEvents {
     final now = DateTime.now();
-    final nextSaturday = now.add(Duration(days: (6 - now.weekday) % 7));
-    final nextSunday = nextSaturday.add(const Duration(days: 1));
+    final daysUntilSaturday = (6 - now.weekday) % 7;
+    final nextSaturday = now.add(Duration(
+        days: daysUntilSaturday == 0 ? 7 : daysUntilSaturday));
+    final nextMonday = nextSaturday.add(const Duration(days: 2));
     return _events
         .where((e) =>
-            e.date.isAfter(now) &&
-            e.date.isBefore(nextSunday.add(const Duration(days: 7))))
+            !e.date.isBefore(DateTime(
+                nextSaturday.year, nextSaturday.month, nextSaturday.day)) &&
+            e.date.isBefore(nextMonday))
         .toList();
   }
 

@@ -115,7 +115,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         onSelected: (_) => eventProv.setCategory(cat),
                         selectedColor: AppColors.primary,
                         labelStyle: TextStyle(
-                          color: Colors.white,
+                          color: isSelected
+                              ? Colors.white
+                              : Theme.of(context).textTheme.bodyMedium?.color,
                           fontWeight:
                               isSelected ? FontWeight.w600 : FontWeight.normal,
                         ),
@@ -286,6 +288,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onTap: () =>
                                       context.push('/event/${event.id}'),
                                   isCompact: true,
+                                  isFavorite: eventProv.favoriteIds
+                                      .contains(event.id),
+                                  onFavorite: () =>
+                                      eventProv.toggleFavorite(event.id),
                                 );
                               },
                             ),
@@ -506,6 +512,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       selectedColor: AppColors.primary,
                       onTap: () {
                         setState(() => _selectedCity = city);
+                        context.read<EventProvider>().setCity(city);
                         Navigator.pop(context);
                       },
                     )),
