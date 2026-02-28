@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         onSelected: (_) => eventProv.setCategory(cat),
                         selectedColor: AppColors.primary,
                         labelStyle: TextStyle(
-                          color: isSelected ? Colors.white : null,
+                          color: Colors.white,
                           fontWeight:
                               isSelected ? FontWeight.w600 : FontWeight.normal,
                         ),
