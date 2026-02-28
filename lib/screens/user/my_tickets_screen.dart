@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/widgets/app_background.dart';
 import '../../core/widgets/ticket_card.dart';
 import '../../providers/booking_provider.dart';
 import '../../models/booking_model.dart';
@@ -60,13 +61,15 @@ class _MyTicketsScreenState extends State<MyTicketsScreen>
           ],
         ),
       ),
-      body: TabBarView(
+      body: AppBackground(
+        child: TabBarView(
         controller: _tabController,
         children: [
           _buildTicketList(upcoming, 'No upcoming tickets', isDark),
           _buildTicketList(past, 'No past tickets', isDark),
           _buildTicketList(cancelled, 'No cancelled tickets', isDark),
         ],
+        ),
       ),
     );
   }

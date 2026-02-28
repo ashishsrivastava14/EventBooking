@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
+import '../../core/widgets/app_background.dart';
 import '../../core/theme/app_colors.dart';
 import '../../providers/admin_provider.dart';
 import '../../providers/booking_provider.dart';
@@ -30,7 +31,8 @@ class AdminDashboardScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
+      body: AppBackground(
+        child: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -260,6 +262,7 @@ class AdminDashboardScreen extends StatelessWidget {
             const SizedBox(height: 30),
           ],
         ),
+      ),
       ),
     );
   }

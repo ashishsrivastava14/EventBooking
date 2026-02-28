@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/widgets/app_background.dart';
 import '../../core/widgets/custom_button.dart';
 import '../../providers/cart_provider.dart';
 import '../../providers/event_provider.dart';
@@ -48,13 +49,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     if (event == null) {
       return Scaffold(
         appBar: AppBar(title: const Text('Checkout')),
-        body: const Center(child: Text('No items in cart')),
+        body: AppBackground(child: const Center(child: Text('No items in cart'))),
       );
     }
 
     return Scaffold(
       appBar: AppBar(title: const Text('Checkout')),
-      body: SingleChildScrollView(
+      body: AppBackground(
+        child: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -456,6 +458,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
             const SizedBox(height: 20),
           ],
+        ),
         ),
       ),
     );

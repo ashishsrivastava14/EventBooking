@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../core/widgets/app_background.dart';
 import '../../core/widgets/app_image.dart';
 import '../../core/theme/app_colors.dart';
 import '../../providers/admin_provider.dart';
@@ -33,7 +34,8 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
       appBar: AppBar(
         title: const Text('Manage Users'),
       ),
-      body: Column(
+      body: AppBackground(
+        child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
@@ -69,6 +71,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
             ),
           ),
         ],
+      ),
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/constants/mock_data.dart';
+import '../../core/widgets/app_background.dart';
 import '../../core/widgets/seat_widget.dart';
 import '../../providers/cart_provider.dart';
 import '../../providers/event_provider.dart';
@@ -29,7 +30,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
     if (event == null) {
       return Scaffold(
         appBar: AppBar(title: const Text('Select Seats')),
-        body: const Center(child: Text('Event not found')),
+        body: AppBackground(child: const Center(child: Text('Event not found'))),
       );
     }
 
@@ -41,7 +42,8 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
       appBar: AppBar(
         title: Text('Select Seats'),
       ),
-      body: Column(
+      body: AppBackground(
+        child: Column(
         children: [
           // Event info
           Padding(
@@ -291,6 +293,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
             ),
           ),
         ],
+        ),
       ),
     );
   }

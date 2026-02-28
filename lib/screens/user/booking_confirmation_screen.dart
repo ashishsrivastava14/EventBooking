@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/widgets/app_background.dart';
 import '../../core/widgets/custom_button.dart';
 import '../../providers/booking_provider.dart';
 
@@ -17,7 +18,7 @@ class BookingConfirmationScreen extends StatelessWidget {
 
     if (booking == null) {
       return Scaffold(
-        body: Center(
+        body: AppBackground(child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -29,12 +30,13 @@ class BookingConfirmationScreen extends StatelessWidget {
               ),
             ],
           ),
-        ),
+        )),
       );
     }
 
     return Scaffold(
-      body: SafeArea(
+      body: AppBackground(
+        child: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: Column(
@@ -200,6 +202,7 @@ class BookingConfirmationScreen extends StatelessWidget {
               ),
             ],
           ),
+        ),
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../core/widgets/app_background.dart';
 import '../../core/widgets/app_image.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/custom_button.dart';
@@ -22,7 +23,8 @@ class AdminVenuesScreen extends StatelessWidget {
         icon: const Icon(Icons.add),
         label: const Text('Add Venue'),
       ),
-      body: venues.isEmpty
+      body: AppBackground(
+        child: venues.isEmpty
           ? const Center(child: Text('No venues'))
           : ListView.builder(
               padding: const EdgeInsets.all(16),
@@ -32,6 +34,7 @@ class AdminVenuesScreen extends StatelessWidget {
                 return _venueCard(venue, isDark, context, admin);
               },
             ),
+      ),
     );
   }
 

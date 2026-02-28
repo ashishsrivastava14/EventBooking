@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/widgets/app_background.dart';
 import '../../core/widgets/app_image.dart';
 import '../../core/widgets/custom_button.dart';
 import '../../providers/booking_provider.dart';
@@ -19,7 +20,7 @@ class TicketDetailScreen extends StatelessWidget {
     if (booking == null) {
       return Scaffold(
         appBar: AppBar(),
-        body: const Center(child: Text('Ticket not found')),
+        body: AppBackground(child: const Center(child: Text('Ticket not found'))),
       );
     }
 
@@ -37,7 +38,8 @@ class TicketDetailScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
+      body: AppBackground(
+        child: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
@@ -200,6 +202,7 @@ class TicketDetailScreen extends StatelessWidget {
               icon: Icons.send,
             ),
           ],
+        ),
         ),
       ),
     );

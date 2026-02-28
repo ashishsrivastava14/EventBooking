@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/constants/mock_data.dart';
+import '../../core/widgets/app_background.dart';
 import '../../core/widgets/event_card.dart';
 import '../../providers/event_provider.dart';
 
@@ -36,7 +37,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
           ),
         ],
       ),
-      body: Column(
+      body: AppBackground(
+        child: Column(
         children: [
           // Search bar
           Padding(
@@ -157,6 +159,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       ),
           ),
         ],
+        ),
       ),
     );
   }

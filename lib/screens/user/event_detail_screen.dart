@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../core/widgets/app_image.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/widgets/app_background.dart';
 import '../../core/widgets/event_card.dart';
 import '../../providers/event_provider.dart';
 import '../../providers/cart_provider.dart';
@@ -42,7 +43,7 @@ class _EventDetailScreenState extends State<EventDetailScreen>
     if (event == null) {
       return Scaffold(
         appBar: AppBar(),
-        body: const Center(child: Text('Event not found')),
+        body: AppBackground(child: const Center(child: Text('Event not found'))),
       );
     }
 
@@ -50,7 +51,8 @@ class _EventDetailScreenState extends State<EventDetailScreen>
     final relatedEvents = eventProv.getRelatedEvents(event);
 
     return Scaffold(
-      body: CustomScrollView(
+      body: AppBackground(
+        child: CustomScrollView(
         slivers: [
           // ─── Parallax Header ──────────
           SliverAppBar(
@@ -434,6 +436,7 @@ class _EventDetailScreenState extends State<EventDetailScreen>
 
           const SliverToBoxAdapter(child: SizedBox(height: 100)),
         ],
+      ),
       ),
       // ─── Sticky Bottom CTA ────────
       bottomNavigationBar: Container(

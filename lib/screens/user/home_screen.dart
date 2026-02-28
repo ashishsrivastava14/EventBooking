@@ -7,6 +7,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/constants/mock_data.dart';
+import '../../core/widgets/app_background.dart';
 import '../../core/widgets/event_card.dart';
 import '../../providers/event_provider.dart';
 
@@ -34,7 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final eventProv = context.watch<EventProvider>();
 
     return Scaffold(
-      body: RefreshIndicator(
+      body: AppBackground(
+        child: RefreshIndicator(
         onRefresh: () async {
           setState(() => _isLoading = true);
           await Future.delayed(const Duration(milliseconds: 600));
@@ -402,6 +404,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SliverToBoxAdapter(child: SizedBox(height: 30)),
           ],
         ),
+      ),
       ),
     );
   }

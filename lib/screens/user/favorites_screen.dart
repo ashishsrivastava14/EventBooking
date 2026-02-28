@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/widgets/app_background.dart';
 import '../../core/widgets/event_card.dart';
 import '../../providers/event_provider.dart';
 
@@ -16,7 +17,8 @@ class FavoritesScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Favorites')),
-      body: favorites.isEmpty
+      body: AppBackground(
+        child: favorites.isEmpty
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -71,6 +73,7 @@ class FavoritesScreen extends StatelessWidget {
                 );
               },
             ),
+      ),
     );
   }
 }

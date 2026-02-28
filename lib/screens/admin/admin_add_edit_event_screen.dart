@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/widgets/app_background.dart';
 import '../../core/widgets/custom_button.dart';
 import '../../providers/admin_provider.dart';
 import '../../models/event_model.dart';
@@ -104,7 +105,8 @@ class _AdminAddEditEventScreenState extends State<AdminAddEditEventScreen> {
       appBar: AppBar(
         title: Text(_isEdit ? 'Edit Event' : 'Add Event'),
       ),
-      body: Form(
+      body: AppBackground(
+        child: Form(
         key: _formKey,
         child: Stepper(
           currentStep: _currentStep,
@@ -374,6 +376,7 @@ class _AdminAddEditEventScreenState extends State<AdminAddEditEventScreen> {
             ),
           ],
         ),
+      ),
       ),
     );
   }

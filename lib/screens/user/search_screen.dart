@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/widgets/app_background.dart';
 import '../../core/widgets/app_image.dart';
 import '../../providers/event_provider.dart';
 
@@ -56,7 +57,8 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
         ],
       ),
-      body: eventProv.searchQuery.isEmpty
+      body: AppBackground(
+        child: eventProv.searchQuery.isEmpty
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -99,6 +101,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 );
               },
             ),
+      ),
     );
   }
 }

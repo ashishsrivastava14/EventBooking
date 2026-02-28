@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../core/widgets/app_background.dart';
 import '../../core/theme/app_colors.dart';
 import '../../providers/booking_provider.dart';
 import '../../models/booking_model.dart';
@@ -67,7 +68,8 @@ class _AdminBookingsScreenState extends State<AdminBookingsScreen> {
           ),
         ],
       ),
-      body: Column(
+      body: AppBackground(
+        child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
@@ -120,6 +122,7 @@ class _AdminBookingsScreenState extends State<AdminBookingsScreen> {
                   ),
           ),
         ],
+      ),
       ),
     );
   }

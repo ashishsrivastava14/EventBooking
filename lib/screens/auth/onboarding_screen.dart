@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../core/widgets/app_image.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/constants/mock_data.dart';
+import '../../core/widgets/app_background.dart';
 import '../../core/widgets/custom_button.dart';
 import '../../providers/auth_provider.dart';
 
@@ -45,7 +46,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     const pages = MockData.onboardingPages;
 
     return Scaffold(
-      body: Stack(
+      body: AppBackground(
+        child: Stack(
         children: [
           PageView.builder(
             controller: _controller,
@@ -154,6 +156,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
         ],
+        ),
       ),
     );
   }

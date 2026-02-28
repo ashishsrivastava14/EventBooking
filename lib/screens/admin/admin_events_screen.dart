@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import '../../core/widgets/app_background.dart';
 import '../../core/theme/app_colors.dart';
 import '../../providers/admin_provider.dart';
 import '../../models/event_model.dart';
@@ -34,7 +35,8 @@ class _AdminEventsScreenState extends State<AdminEventsScreen> {
         icon: const Icon(Icons.add),
         label: const Text('Add Event'),
       ),
-      body: Column(
+      body: AppBackground(
+        child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
@@ -155,6 +157,7 @@ class _AdminEventsScreenState extends State<AdminEventsScreen> {
                   ),
           ),
         ],
+      ),
       ),
     );
   }
