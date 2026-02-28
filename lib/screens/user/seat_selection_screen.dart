@@ -33,8 +33,8 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
       );
     }
 
-    final rows = 8;
-    final cols = 10;
+    const rows = 8;
+    const cols = 10;
     final rowLabels = List.generate(rows, (i) => String.fromCharCode(65 + i));
 
     return Scaffold(

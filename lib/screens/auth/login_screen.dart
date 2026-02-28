@@ -93,7 +93,28 @@ class _LoginScreenState extends State<LoginScreen> {
     final auth = context.watch<AuthProvider>();
 
     return Scaffold(
-      body: SafeArea(
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/bg_splash_orange.png'),
+            fit: BoxFit.cover,
+            opacity: 0.2,
+          ),
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.black.withOpacity(0.4),
+                Colors.black.withOpacity(0.7),
+              ],
+            ),
+          ),
+          child: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Form(
@@ -103,18 +124,10 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 const SizedBox(height: 40),
                 Center(
-                  child: Container(
-                    width: 72,
-                    height: 72,
-                    decoration: BoxDecoration(
-                      gradient: AppColors.primaryGradient,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Icon(
-                      Icons.confirmation_number,
-                      size: 36,
-                      color: Colors.white,
-                    ),
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    width: 144,
+                    height: 144,
                   ),
                 ).animate().scale(duration: 400.ms, curve: Curves.easeOutBack),
                 const SizedBox(height: 30),
@@ -123,6 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.w700,
+                    color: Colors.white,
                   ),
                 ).animate().fadeIn(duration: 400.ms).slideX(begin: -0.1),
                 const SizedBox(height: 8),
@@ -130,9 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   'Sign in to continue booking events',
                   style: TextStyle(
                     fontSize: 15,
-                    color: isDark
-                        ? AppColors.textSecondaryDark
-                        : AppColors.textSecondaryLight,
+                    color: Colors.white.withOpacity(0.7),
                   ),
                 ).animate().fadeIn(delay: 100.ms, duration: 400.ms),
                 const SizedBox(height: 36),
@@ -335,6 +347,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
           ),
+        ),
+      ),
         ),
       ),
     );

@@ -170,7 +170,7 @@ class AdminDashboardScreen extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 6),
-                            Text('${e.key}', style: const TextStyle(fontSize: 12)),
+                            Text(e.key, style: const TextStyle(fontSize: 12)),
                           ],
                         ),
                       );

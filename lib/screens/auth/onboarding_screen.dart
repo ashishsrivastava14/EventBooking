@@ -42,7 +42,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final pages = MockData.onboardingPages;
+    const pages = MockData.onboardingPages;
 
     return Scaffold(
       body: Stack(

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import '../models/event_model.dart';
 import '../models/user_model.dart';
 import '../models/venue_model.dart';
-import '../models/booking_model.dart';
-import '../models/ticket_model.dart';
 import '../core/constants/mock_data.dart';
 
 class AdminProvider extends ChangeNotifier {
