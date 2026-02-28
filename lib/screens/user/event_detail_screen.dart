@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/widgets/powered_by_footer.dart';
 import 'package:provider/provider.dart';
 import '../../core/widgets/app_image.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -439,7 +440,10 @@ class _EventDetailScreenState extends State<EventDetailScreen>
       ),
       ),
       // ─── Sticky Bottom CTA ────────
-      bottomNavigationBar: Container(
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: isDark ? AppColors.surface : AppColors.surfaceLight,
@@ -496,6 +500,9 @@ class _EventDetailScreenState extends State<EventDetailScreen>
             ),
           ],
         ),
+          ),
+          const PoweredByFooter(),
+        ],
       ),
     );
   }

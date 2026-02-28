@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/widgets/powered_by_footer.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/app_background.dart';
@@ -36,6 +37,7 @@ class _SearchScreenState extends State<SearchScreen> {
     final eventProv = context.watch<EventProvider>();
 
     return Scaffold(
+      bottomNavigationBar: const PoweredByFooter(),
       appBar: AppBar(
         title: TextField(
           controller: _controller,

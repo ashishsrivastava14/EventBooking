@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/widgets/powered_by_footer.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/app_background.dart';
@@ -65,6 +66,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final auth = context.watch<AuthProvider>();
 
     return Scaffold(
+      bottomNavigationBar: const PoweredByFooter(),
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),

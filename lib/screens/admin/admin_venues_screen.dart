@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../core/widgets/powered_by_footer.dart';
 import '../../core/widgets/app_background.dart';
 import '../../core/widgets/app_image.dart';
 import '../../core/theme/app_colors.dart';
@@ -17,6 +18,7 @@ class AdminVenuesScreen extends StatelessWidget {
     final venues = admin.venues;
 
     return Scaffold(
+      bottomNavigationBar: const PoweredByFooter(),
       appBar: AppBar(title: const Text('Manage Venues')),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showVenueForm(context, admin, null),

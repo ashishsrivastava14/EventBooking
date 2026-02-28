@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/widgets/powered_by_footer.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/constants/mock_data.dart';
@@ -39,6 +40,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
     final rowLabels = List.generate(rows, (i) => String.fromCharCode(65 + i));
 
     return Scaffold(
+      bottomNavigationBar: const PoweredByFooter(),
       appBar: AppBar(
         title: Text('Select Seats'),
       ),

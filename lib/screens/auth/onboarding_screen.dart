@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/widgets/powered_by_footer.dart';
 import 'package:provider/provider.dart';
 import '../../core/widgets/app_image.dart';
 import '../../core/theme/app_colors.dart';
@@ -46,6 +47,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     const pages = MockData.onboardingPages;
 
     return Scaffold(
+      bottomNavigationBar: const PoweredByFooter(),
       body: AppBackground(
         child: Stack(
         children: [

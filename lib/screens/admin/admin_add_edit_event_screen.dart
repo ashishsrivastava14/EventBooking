@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/widgets/powered_by_footer.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/app_background.dart';
@@ -102,6 +103,7 @@ class _AdminAddEditEventScreenState extends State<AdminAddEditEventScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
+      bottomNavigationBar: const PoweredByFooter(),
       appBar: AppBar(
         title: Text(_isEdit ? 'Edit Event' : 'Add Event'),
       ),

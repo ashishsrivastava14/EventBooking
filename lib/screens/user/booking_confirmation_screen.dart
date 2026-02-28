@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/widgets/powered_by_footer.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -35,6 +36,7 @@ class BookingConfirmationScreen extends StatelessWidget {
     }
 
     return Scaffold(
+      bottomNavigationBar: const PoweredByFooter(),
       body: AppBackground(
         child: SafeArea(
         child: SingleChildScrollView(
