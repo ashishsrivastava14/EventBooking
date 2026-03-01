@@ -8,7 +8,7 @@ class AuthProvider extends ChangeNotifier {
   bool _isAuthenticated = false;
   bool _isLoading = false;
   bool _hasSeenOnboarding = false;
-  ThemeMode _themeMode = ThemeMode.light;
+  ThemeMode _themeMode = ThemeMode.dark;
   bool _pushNotifications = true;
   bool _emailNotifications = false;
 
@@ -28,7 +28,7 @@ class AuthProvider extends ChangeNotifier {
   Future<void> _loadAuthState() async {
     final prefs = await SharedPreferences.getInstance();
     _hasSeenOnboarding = prefs.getBool('hasSeenOnboarding') ?? false;
-    _themeMode = (prefs.getBool('darkMode') ?? false)
+    _themeMode = (prefs.getBool('darkMode') ?? true)
         ? ThemeMode.dark
         : ThemeMode.light;
     _pushNotifications = prefs.getBool('pushNotifications') ?? true;
