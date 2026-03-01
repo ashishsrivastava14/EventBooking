@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
@@ -56,20 +57,48 @@ class _BookingConfirmationScreenState
     }
   }
 
-  void _addToCalendar(bookmark) {
-    final event = Event(
-      title: bookmark.eventTitle,
-      description:
-          '${bookmark.tierName} · Seats: ${bookmark.seats.join(', ')}\nRef: ${bookmark.id.toUpperCase()}',
-      location: bookmark.venue,
-      startDate: bookmark.eventDate,
-      endDate: bookmark.eventDate.add(const Duration(hours: 3)),
-      iosParams: const IOSParams(reminder: Duration(hours: 1)),
-      androidParams: const AndroidParams(
-        emailInvites: [],
-      ),
-    );
-    Add2Calendar.addEvent2Cal(event);
+  Future<void> _addToCalendar(BuildContext context, bookmark) async {
+    final isMobile = !kIsWeb &&
+        (defaultTargetPlatform == TargetPlatform.android ||
+            defaultTargetPlatform == TargetPlatform.iOS);
+    if (!isMobile) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Add to Calendar is only supported on Android & iOS.'),
+        ),
+      );
+      return;
+    }
+    try {
+      final event = Event(
+        title: bookmark.eventTitle,
+        description:
+            '${bookmark.tierName} · Seats: ${bookmark.seats.join(', ')}\nRef: ${bookmark.id.toUpperCase()}',
+        location: bookmark.venue,
+        startDate: bookmark.eventDate,
+        endDate: bookmark.eventDate.add(const Duration(hours: 3)),
+        iosParams: const IOSParams(reminder: Duration(hours: 1)),
+        androidParams: const AndroidParams(emailInvites: []),
+      );
+      final added = await Add2Calendar.addEvent2Cal(event);
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(added
+              ? '✅ Event added to your calendar!'
+              : 'Could not add event — please check calendar permissions.'),
+          backgroundColor: added ? AppColors.success : AppColors.error,
+        ),
+      );
+    } catch (e) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Calendar error: $e'),
+          backgroundColor: AppColors.error,
+        ),
+      );
+    }
   }
 
   @override
@@ -273,7 +302,7 @@ class _BookingConfirmationScreenState
                     Expanded(
                       child: CustomButton(
                         text: 'Add to Calendar',
-                        onPressed: () => _addToCalendar(booking),
+                        onPressed: () => _addToCalendar(context, booking),
                         isOutlined: true,
                         icon: Icons.calendar_today,
                       ),
