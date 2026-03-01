@@ -19,7 +19,16 @@ class SeatSelectionScreen extends StatefulWidget {
 
 class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
   String _selectedZone = 'Floor';
-  final List<String> _zones = ['Floor', 'A-Block', 'B-Block', 'Balcony'];
+
+  // Each zone: {rows, cols, rowOffset, colOffset}
+  static const Map<String, Map<String, int>> _zoneConfig = {
+    'Floor':   {'rows': 6,  'cols': 8,  'rowOffset': 0,  'colOffset': 0},
+    'A-Block': {'rows': 5,  'cols': 10, 'rowOffset': 6,  'colOffset': 0},
+    'B-Block': {'rows': 6,  'cols': 10, 'rowOffset': 11, 'colOffset': 0},
+    'Balcony': {'rows': 8,  'cols': 12, 'rowOffset': 17, 'colOffset': 0},
+  };
+
+  List<String> get _zones => _zoneConfig.keys.toList();
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +44,10 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
       );
     }
 
-    const rows = 8;
-    const cols = 10;
+    final zoneConf  = _zoneConfig[_selectedZone]!;
+    final rows      = zoneConf['rows']!;
+    final cols      = zoneConf['cols']!;
+    final rowOffset = zoneConf['rowOffset']!;
     final rowLabels = List.generate(rows, (i) => String.fromCharCode(65 + i));
 
     return Scaffold(
@@ -140,83 +151,94 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
 
           const SizedBox(height: 16),
 
-          // Seat Grid
+          // Seat Grid — wrapped in InteractiveViewer to allow pinch/pan
           Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Column(
-                children: List.generate(rows, (row) {
-                  final rowLabel = rowLabels[row];
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 20,
-                        child: Text(
-                          rowLabel,
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
-                            color: isDark
-                                ? AppColors.textSecondaryDark
-                                : AppColors.textSecondaryLight,
+            child: InteractiveViewer(
+              boundaryMargin: const EdgeInsets.all(40),
+              minScale: 0.5,
+              maxScale: 2.5,
+              constrained: false,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                    children: List.generate(rows, (row) {
+                      final rowLabel = rowLabels[row];
+                      // seat IDs incorporate row offset so they're unique per zone
+                      final seatRowLabel =
+                          String.fromCharCode(65 + row + rowOffset);
+                      return Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(
+                            width: 22,
+                            child: Text(
+                              rowLabel,
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w600,
+                                color: isDark
+                                    ? AppColors.textSecondaryDark
+                                    : AppColors.textSecondaryLight,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      ...List.generate(cols, (col) {
-                        final seatId = '$rowLabel${col + 1}';
-                        final isTaken =
-                            MockData.takenSeats.contains(seatId);
-                        final isVip = MockData.vipSeats.contains(seatId);
-                        final isSelected =
-                            cart.selectedSeats.contains(seatId);
+                          ...List.generate(cols, (col) {
+                            final seatId = '$seatRowLabel${col + 1}';
+                            final isTaken =
+                                MockData.takenSeats.contains(seatId);
+                            final isVip = MockData.vipSeats.contains(seatId);
+                            final isSelected =
+                                cart.selectedSeats.contains(seatId);
 
-                        SeatState state;
-                        if (isTaken) {
-                          state = SeatState.taken;
-                        } else if (isSelected) {
-                          state = SeatState.selected;
-                        } else if (isVip) {
-                          state = SeatState.vip;
-                        } else {
-                          state = SeatState.available;
-                        }
-
-                        return SeatWidget(
-                          label: seatId,
-                          state: state,
-                          onTap: () {
-                            if (isTaken) return;
-                            final success = cart.toggleSeat(seatId);
-                            if (!success) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                      'Maximum 6 seats per booking!'),
-                                  backgroundColor: AppColors.error,
-                                ),
-                              );
+                            SeatState state;
+                            if (isTaken) {
+                              state = SeatState.taken;
+                            } else if (isSelected) {
+                              state = SeatState.selected;
+                            } else if (isVip) {
+                              state = SeatState.vip;
+                            } else {
+                              state = SeatState.available;
                             }
-                          },
-                        );
-                      }),
-                      SizedBox(
-                        width: 20,
-                        child: Text(
-                          rowLabel,
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
-                            color: isDark
-                                ? AppColors.textSecondaryDark
-                                : AppColors.textSecondaryLight,
+
+                            return SeatWidget(
+                              label: seatId,
+                              state: state,
+                              onTap: () {
+                                if (isTaken) return;
+                                final success = cart.toggleSeat(seatId);
+                                if (!success) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                          'Maximum 6 seats per booking!'),
+                                      backgroundColor: AppColors.error,
+                                    ),
+                                  );
+                                }
+                              },
+                            );
+                          }),
+                          SizedBox(
+                            width: 22,
+                            child: Text(
+                              rowLabel,
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w600,
+                                color: isDark
+                                    ? AppColors.textSecondaryDark
+                                    : AppColors.textSecondaryLight,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ],
-                  );
-                }),
-              ),
+                        ],
+                      );
+                    }),
+                  ),
+                ),
             ),
           ),
 
