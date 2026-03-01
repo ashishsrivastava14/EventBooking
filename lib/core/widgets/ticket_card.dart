@@ -46,9 +46,10 @@ class TicketCard extends StatelessWidget {
                       children: [
                         Text(
                           booking.eventTitle,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
+                            color: isDark ? Colors.white : Colors.black87,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,

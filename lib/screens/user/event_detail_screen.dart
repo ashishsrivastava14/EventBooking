@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../core/widgets/powered_by_footer.dart';
 import 'package:provider/provider.dart';
 import '../../core/widgets/app_image.dart';
@@ -27,6 +28,9 @@ class _EventDetailScreenState extends State<EventDetailScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
+    _tabController.addListener(() {
+      if (!_tabController.indexIsChanging && mounted) setState(() {});
+    });
   }
 
   @override
@@ -148,8 +152,24 @@ class _EventDetailScreenState extends State<EventDetailScreen>
                     runSpacing: 8,
                     children: event.artists.map((artist) {
                       return Chip(
-                        avatar: const Icon(Icons.person, size: 16),
-                        label: Text(artist, style: const TextStyle(fontSize: 12)),
+                        backgroundColor: isDark
+                            ? AppColors.card
+                            : AppColors.cardLight,
+                        side: BorderSide(
+                          color: isDark
+                              ? Colors.white.withValues(alpha: 0.15)
+                              : Colors.black.withValues(alpha: 0.1),
+                        ),
+                        avatar: Icon(Icons.person,
+                            size: 16,
+                            color: isDark ? Colors.white70 : Colors.black54),
+                        label: Text(
+                          artist,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: isDark ? Colors.white : Colors.black87,
+                          ),
+                        ),
                       );
                     }).toList(),
                   ),
@@ -172,153 +192,317 @@ class _EventDetailScreenState extends State<EventDetailScreen>
           ),
 
           SliverToBoxAdapter(
-            child: SizedBox(
-              height: 200,
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  // About
-                  SingleChildScrollView(
-                    padding: const EdgeInsets.all(16),
-                    child: Text(
-                      event.description,
-                      style: TextStyle(
-                        fontSize: 14,
-                        height: 1.6,
-                        color: isDark
-                            ? AppColors.textSecondaryDark
-                            : AppColors.textSecondaryLight,
-                      ),
+            child: IndexedStack(
+              index: _tabController.index,
+              children: [
+                // ── About ──────────────────────────────
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                    event.description,
+                    style: TextStyle(
+                      fontSize: 14,
+                      height: 1.6,
+                      color: isDark
+                          ? AppColors.textSecondaryDark
+                          : AppColors.textSecondaryLight,
                     ),
                   ),
-                  // Lineup
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: event.artists.asMap().entries.map((entry) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 12),
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 20,
-                                backgroundColor: AppColors.primary,
-                                child: Text(
-                                  '${entry.key + 1}',
-                                  style: const TextStyle(color: Colors.white),
-                                ),
+                ),
+                // ── Lineup ─────────────────────────────
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: event.artists.asMap().entries.map((entry) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 20,
+                              backgroundColor: AppColors.primary,
+                              child: Text(
+                                '${entry.key + 1}',
+                                style: const TextStyle(color: Colors.white),
                               ),
-                              const SizedBox(width: 12),
-                              Text(
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
                                 entry.value,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                  // Venue
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          event.venueName,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 8),
-                        Text(event.city),
-                        const SizedBox(height: 16),
-                        // Map placeholder
-                        Container(
-                          height: 100,
-                          decoration: BoxDecoration(
-                            color: isDark ? AppColors.card : AppColors.cardLight,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: const Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.map, size: 32, color: AppColors.primary),
-                                SizedBox(height: 4),
-                                Text('Map Placeholder',
-                                    style: TextStyle(fontSize: 12)),
-                              ],
+                      );
+                    }).toList(),
+                  ),
+                ),
+                // ── Venue ──────────────────────────────
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        event.venueName,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          const Icon(Icons.location_on,
+                              size: 14, color: AppColors.secondary),
+                          const SizedBox(width: 4),
+                          Text(
+                            event.city,
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: isDark
+                                  ? AppColors.textSecondaryDark
+                                  : AppColors.textSecondaryLight,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  // Reviews
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      children: List.generate(3, (i) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 12),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CircleAvatar(
-                                radius: 16,
-                                backgroundColor: AppColors.primary,
-                                child: Text('U${i + 1}',
-                                    style: const TextStyle(
-                                        fontSize: 11, color: Colors.white)),
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      // Google Maps-style tile map
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(14),
+                        child: Stack(
+                          children: [
+                            // 3×2 OSM tile grid (CartoDB Positron – Google Maps look-alike)
+                            SizedBox(
+                              height: 180,
+                              child: OverflowBox(
+                                maxWidth: double.infinity,
+                                maxHeight: double.infinity,
+                                alignment: Alignment.center,
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Row(
+                                      mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Text('User ${i + 1}',
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 13)),
-                                        const Spacer(),
-                                        ...List.generate(
-                                            5,
-                                            (s) => Icon(Icons.star,
-                                                size: 12,
-                                                color: s < 4 + (i % 2)
-                                                    ? AppColors.secondary
-                                                    : Colors.grey)),
+                                        Image.network(
+                                          'https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/12/1204/1536.png',
+                                          width: 256,
+                                          height: 256,
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (_, __, ___) =>
+                                              const SizedBox(width: 256, height: 256),
+                                        ),
+                                        Image.network(
+                                          'https://cartodb-basemaps-b.global.ssl.fastly.net/light_all/12/1205/1536.png',
+                                          width: 256,
+                                          height: 256,
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (_, __, ___) =>
+                                              const SizedBox(width: 256, height: 256),
+                                        ),
+                                        Image.network(
+                                          'https://cartodb-basemaps-c.global.ssl.fastly.net/light_all/12/1206/1536.png',
+                                          width: 256,
+                                          height: 256,
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (_, __, ___) =>
+                                              const SizedBox(width: 256, height: 256),
+                                        ),
                                       ],
                                     ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      'Amazing event! Would definitely recommend.',
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          color: isDark
-                                              ? AppColors.textSecondaryDark
-                                              : AppColors.textSecondaryLight),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Image.network(
+                                          'https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/12/1204/1537.png',
+                                          width: 256,
+                                          height: 256,
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (_, __, ___) =>
+                                              const SizedBox(width: 256, height: 256),
+                                        ),
+                                        Image.network(
+                                          'https://cartodb-basemaps-b.global.ssl.fastly.net/light_all/12/1205/1537.png',
+                                          width: 256,
+                                          height: 256,
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (_, __, ___) =>
+                                              const SizedBox(width: 256, height: 256),
+                                        ),
+                                        Image.network(
+                                          'https://cartodb-basemaps-c.global.ssl.fastly.net/light_all/12/1206/1537.png',
+                                          width: 256,
+                                          height: 256,
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (_, __, ___) =>
+                                              const SizedBox(width: 256, height: 256),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
-                        );
-                      }),
-                    ),
+                            ),
+                            // Location pin overlay
+                            Positioned.fill(
+                              child: Center(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(6),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withValues(alpha: 0.2),
+                                            blurRadius: 4,
+                                            offset: const Offset(0, 2),
+                                          )
+                                        ],
+                                      ),
+                                      child: Text(
+                                        event.venueName,
+                                        style: const TextStyle(
+                                          color: Colors.black87,
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    const Icon(
+                                      Icons.location_pin,
+                                      color: Colors.red,
+                                      size: 36,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            // Google Maps attribution badge
+                            Positioned(
+                              bottom: 6,
+                              right: 8,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 6, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: 0.85),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: const Text(
+                                  '© OpenStreetMap',
+                                  style: TextStyle(
+                                      fontSize: 9, color: Colors.black54),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      OutlinedButton.icon(
+                        onPressed: () async {
+                          final query =
+                              Uri.encodeComponent('${event.venueName}, ${event.city}');
+                          // Try Google Maps app first, fall back to browser
+                          final googleMapsApp =
+                              Uri.parse('comgooglemaps://?q=$query');
+                          final googleMapsBrowser = Uri.parse(
+                              'https://www.google.com/maps/search/?api=1&query=$query');
+                          if (await canLaunchUrl(googleMapsApp)) {
+                            await launchUrl(googleMapsApp);
+                          } else {
+                            await launchUrl(
+                              googleMapsBrowser,
+                              mode: LaunchMode.externalApplication,
+                            );
+                          }
+                        },
+                        icon: const Icon(Icons.directions, size: 16),
+                        label: const Text('Get Directions'),
+                        style: OutlinedButton.styleFrom(
+                          minimumSize: const Size.fromHeight(40),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                // ── Reviews ────────────────────────────
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: List.generate(3, (i) {
+                      final reviewTexts = [
+                        'Absolutely incredible! The energy was unreal from start to finish.',
+                        'One of the best shows I\'ve ever attended. Highly recommend!',
+                        'Amazing production quality and crowd atmosphere. Will be back.',
+                      ];
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 14),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CircleAvatar(
+                              radius: 18,
+                              backgroundColor: AppColors.primary,
+                              child: Text('U${i + 1}',
+                                  style: const TextStyle(
+                                      fontSize: 11, color: Colors.white)),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text('User ${i + 1}',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 13)),
+                                      const Spacer(),
+                                      ...List.generate(
+                                          5,
+                                          (s) => Icon(Icons.star,
+                                              size: 13,
+                                              color: s < 4 + (i % 2)
+                                                  ? AppColors.secondary
+                                                  : Colors.grey.shade400)),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    reviewTexts[i],
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        height: 1.4,
+                                        color: isDark
+                                            ? AppColors.textSecondaryDark
+                                            : AppColors.textSecondaryLight),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+              ],
             ),
           ),
 

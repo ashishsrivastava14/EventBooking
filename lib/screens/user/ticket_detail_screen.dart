@@ -72,9 +72,10 @@ class TicketDetailScreen extends StatelessWidget {
                       children: [
                         Text(
                           booking.eventTitle,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
+                            color: isDark ? Colors.white : Colors.black87,
                           ),
                         ),
                         const SizedBox(height: 16),
