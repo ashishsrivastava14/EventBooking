@@ -66,14 +66,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     imageUrl: page['image']!,
                   ),
                   Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
+                          Color(0x22026CDF), // subtle blue tint at top
                           Colors.transparent,
-                          Colors.black.withValues(alpha: 0.8),
+                          Color(0xCC000000), // dark at bottom
                         ],
+                        stops: [0.0, 0.3, 1.0],
                       ),
                     ),
                   ),
@@ -141,10 +143,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       width: _currentPage == index ? 28 : 8,
                       height: 8,
                       decoration: BoxDecoration(
+                        gradient: _currentPage == index
+                            ? AppColors.primaryGradient
+                            : null,
                         color: _currentPage == index
-                            ? AppColors.primary
+                            ? null
                             : Colors.white.withValues(alpha: 0.4),
                         borderRadius: BorderRadius.circular(4),
+                        boxShadow: _currentPage == index
+                            ? [
+                                BoxShadow(
+                                  color: AppColors.primary
+                                      .withValues(alpha: 0.5),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 2),
+                                )
+                              ]
+                            : null,
                       ),
                     );
                   }),

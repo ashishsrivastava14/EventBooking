@@ -77,10 +77,12 @@ class _EventDetailScreenState extends State<EventDetailScreen>
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
+                          const Color(0xFF026CDF).withValues(alpha: 0.08),
                           Colors.transparent,
                           (isDark ? AppColors.backgroundDark : AppColors.backgroundLight)
-                              .withValues(alpha: 0.9),
+                              .withValues(alpha: 0.95),
                         ],
+                        stops: const [0.0, 0.4, 1.0],
                       ),
                     ),
                   ),
@@ -160,24 +162,41 @@ class _EventDetailScreenState extends State<EventDetailScreen>
                     spacing: 8,
                     runSpacing: 8,
                     children: event.artists.map((artist) {
-                      return Chip(
-                        backgroundColor: isDark
-                            ? AppColors.card
-                            : AppColors.cardLight,
-                        side: BorderSide(
-                          color: isDark
-                              ? Colors.white.withValues(alpha: 0.15)
-                              : Colors.black.withValues(alpha: 0.1),
-                        ),
-                        avatar: Icon(Icons.person,
-                            size: 16,
-                            color: isDark ? Colors.white70 : Colors.black54),
-                        label: Text(
-                          artist,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: isDark ? Colors.white : Colors.black87,
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 6),
+                        decoration: BoxDecoration(
+                          gradient: isDark
+                              ? const LinearGradient(
+                                  colors: [Color(0xFF1A2B4E), Color(0xFF0D1B3E)],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                )
+                              : AppColors.cardGradientLight,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: const Color(0xFF026CDF).withValues(alpha: 0.3),
                           ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ShaderMask(
+                              shaderCallback: (b) =>
+                                  AppColors.primaryGradient.createShader(b),
+                              blendMode: BlendMode.srcIn,
+                              child: const Icon(Icons.person,
+                                  size: 14, color: Colors.white),
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              artist,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: isDark ? Colors.white : Colors.black87,
+                              ),
+                            ),
+                          ],
                         ),
                       );
                     }).toList(),
@@ -538,16 +557,35 @@ class _EventDetailScreenState extends State<EventDetailScreen>
                         margin: const EdgeInsets.only(bottom: 10),
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: isSelected
-                              ? AppColors.primary.withValues(alpha: 0.1)
-                              : (isDark ? AppColors.card : AppColors.cardLight),
+                          gradient: isSelected
+                              ? const LinearGradient(
+                                  colors: [
+                                    Color(0xFF1A3A6E),
+                                    Color(0xFF0D2050),
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                )
+                              : (isDark
+                                  ? AppColors.cardGradient
+                                  : AppColors.cardGradientLight),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
                             color: isSelected
                                 ? AppColors.primary
-                                : Colors.transparent,
-                            width: 2,
+                                : Colors.white.withValues(alpha: 0.07),
+                            width: isSelected ? 2 : 1,
                           ),
+                          boxShadow: isSelected
+                              ? [
+                                  BoxShadow(
+                                    color: AppColors.primary
+                                        .withValues(alpha: 0.3),
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 4),
+                                  )
+                                ]
+                              : null,
                         ),
                         child: Row(
                           children: [

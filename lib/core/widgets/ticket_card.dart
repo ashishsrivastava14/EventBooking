@@ -22,10 +22,49 @@ class TicketCard extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
-          color: isDark ? AppColors.card : AppColors.cardLight,
+          gradient:
+              isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
           borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.07)
+                : Colors.black.withValues(alpha: 0.05),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: isDark
+                  ? const Color(0xFF026CDF).withValues(alpha: 0.12)
+                  : Colors.black.withValues(alpha: 0.07),
+              blurRadius: 18,
+              offset: const Offset(0, 5),
+            ),
+          ],
         ),
-        child: Column(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Gradient left accent strip
+                Container(
+                  width: 5,
+                  decoration: BoxDecoration(
+                    gradient: booking.status == BookingStatus.confirmed
+                        ? AppColors.successGradient
+                        : booking.status == BookingStatus.cancelled
+                            ? const LinearGradient(
+                                colors: [AppColors.error, Color(0xFFFF8A80)],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              )
+                            : booking.status == BookingStatus.checkedIn
+                                ? AppColors.primaryGradient
+                                : AppColors.cardGradient,
+                  ),
+                ),
+                Expanded(
+                  child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.all(14),
@@ -121,18 +160,28 @@ class TicketCard extends StatelessWidget {
                           : AppColors.textSecondaryLight,
                     ),
                   ),
-                  Text(
-                    '\$${booking.total.toStringAsFixed(2)}',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.primary,
+                  ShaderMask(
+                    shaderCallback: (b) =>
+                        AppColors.primaryGradient.createShader(b),
+                    blendMode: BlendMode.srcIn,
+                    child: Text(
+                      '\$${booking.total.toStringAsFixed(2)}',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-          ],
+                  ],
+                ),
+              ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -161,18 +210,31 @@ class TicketCard extends StatelessWidget {
         break;
     }
 
+    final gradient = booking.status == BookingStatus.confirmed
+        ? AppColors.successGradient
+        : booking.status == BookingStatus.cancelled
+            ? const LinearGradient(
+                colors: [AppColors.error, Color(0xFFFF8A80)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              )
+            : booking.status == BookingStatus.checkedIn
+                ? AppColors.primaryGradient
+                : LinearGradient(
+                    colors: [color, color.withValues(alpha: 0.8)],
+                  );
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.15),
+        gradient: gradient,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
         text,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 10,
-          fontWeight: FontWeight.w600,
-          color: color,
+          fontWeight: FontWeight.w700,
+          color: Colors.white,
         ),
       ),
     );

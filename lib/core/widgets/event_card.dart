@@ -35,8 +35,22 @@ class EventCard extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
-          color: isDark ? AppColors.card : AppColors.cardLight,
+          gradient: isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
           borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.07)
+                : Colors.black.withValues(alpha: 0.05),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: isDark
+                  ? const Color(0xFF026CDF).withValues(alpha: 0.12)
+                  : Colors.black.withValues(alpha: 0.08),
+              blurRadius: 20,
+              offset: const Offset(0, 6),
+            ),
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,6 +66,21 @@ class EventCard extends StatelessWidget {
                     width: double.infinity,
                   ),
                 ),
+                // Gradient scrim over the image bottom
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    height: 70,
+                    decoration: const BoxDecoration(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(16)),
+                      gradient: AppColors.imageScrimGradient,
+                    ),
+                  ),
+                ),
+                // Category badge with gradient
                 Positioned(
                   top: 12,
                   left: 12,
@@ -59,8 +88,15 @@ class EventCard extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
-                      color: AppColors.primary,
+                      gradient: AppColors.primaryGradient,
                       borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withValues(alpha: 0.4),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
                     ),
                     child: Text(
                       event.category,
@@ -83,6 +119,8 @@ class EventCard extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.black.withValues(alpha: 0.5),
                           shape: BoxShape.circle,
+                          border: Border.all(
+                              color: Colors.white.withValues(alpha: 0.15)),
                         ),
                         child: Icon(
                           isFavorite ? Icons.favorite : Icons.favorite_border,
@@ -101,9 +139,10 @@ class EventCard extends StatelessWidget {
                 children: [
                   Text(
                     event.title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
+                      color: isDark ? Colors.white : AppColors.textPrimaryLight,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -111,15 +150,20 @@ class EventCard extends StatelessWidget {
                   const SizedBox(height: 6),
                   Row(
                     children: [
-                      const Icon(Icons.calendar_today,
-                          size: 14, color: AppColors.primary),
+                      ShaderMask(
+                        shaderCallback: (b) =>
+                            AppColors.primaryGradient.createShader(b),
+                        child: const Icon(Icons.calendar_today,
+                            size: 14, color: Colors.white),
+                      ),
                       const SizedBox(width: 6),
                       Text(
                         '${_monthName(event.date.month)} ${event.date.day}, ${event.date.year} · ${event.time}',
                         style: TextStyle(
                           fontSize: 12,
-                          color:
-                              isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                          color: isDark
+                              ? AppColors.textSecondaryDark
+                              : AppColors.textSecondaryLight,
                         ),
                       ),
                     ],
@@ -127,8 +171,12 @@ class EventCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Row(
                     children: [
-                      const Icon(Icons.location_on,
-                          size: 14, color: AppColors.secondary),
+                      ShaderMask(
+                        shaderCallback: (b) =>
+                            AppColors.warmGradient.createShader(b),
+                        child: const Icon(Icons.location_on,
+                            size: 14, color: Colors.white),
+                      ),
                       const SizedBox(width: 6),
                       Expanded(
                         child: Text(
@@ -146,30 +194,53 @@ class EventCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 10),
+                  // Thin gradient accent line
+                  Container(
+                    height: 1,
+                    decoration: const BoxDecoration(
+                      gradient: AppColors.primaryGradient,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        'From \$${event.minPrice.toStringAsFixed(0)}',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.primary,
+                      ShaderMask(
+                        shaderCallback: (b) =>
+                            AppColors.primaryGradient.createShader(b),
+                        blendMode: BlendMode.srcIn,
+                        child: Text(
+                          'From \$${event.minPrice.toStringAsFixed(0)}',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                      Row(
-                        children: [
-                          const Icon(Icons.star,
-                              size: 16, color: AppColors.secondary),
-                          const SizedBox(width: 4),
-                          Text(
-                            event.rating.toString(),
-                            style: const TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          gradient: AppColors.warmGradient,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.star,
+                                size: 14, color: Colors.white),
+                            const SizedBox(width: 4),
+                            Text(
+                              event.rating.toString(),
+                              style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -189,20 +260,51 @@ class EventCard extends StatelessWidget {
         width: 200,
         margin: const EdgeInsets.only(right: 14),
         decoration: BoxDecoration(
-          color: isDark ? AppColors.card : AppColors.cardLight,
+          gradient:
+              isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
           borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.07)
+                : Colors.black.withValues(alpha: 0.05),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: isDark
+                  ? const Color(0xFF026CDF).withValues(alpha: 0.10)
+                  : Colors.black.withValues(alpha: 0.07),
+              blurRadius: 16,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(16)),
-              child: AppImage(
-                imageUrl: event.imageUrl,
-                height: 120,
-                width: 200,
-              ),
+            Stack(
+              children: [
+                ClipRRect(
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(16)),
+                  child: AppImage(
+                    imageUrl: event.imageUrl,
+                    height: 120,
+                    width: 200,
+                  ),
+                ),
+                // Scrim on compact image
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    height: 50,
+                    decoration: const BoxDecoration(
+                      gradient: AppColors.imageScrimGradient,
+                    ),
+                  ),
+                ),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.all(10),
@@ -211,9 +313,10 @@ class EventCard extends StatelessWidget {
                 children: [
                   Text(
                     event.title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
+                      color: isDark ? Colors.white : AppColors.textPrimaryLight,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -228,13 +331,18 @@ class EventCard extends StatelessWidget {
                           : AppColors.textSecondaryLight,
                     ),
                   ),
-                  const SizedBox(height: 2),
-                  Text(
-                    '\$${event.minPrice.toStringAsFixed(0)}+',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.primary,
+                  const SizedBox(height: 4),
+                  ShaderMask(
+                    shaderCallback: (b) =>
+                        AppColors.primaryGradient.createShader(b),
+                    blendMode: BlendMode.srcIn,
+                    child: Text(
+                      '\$${event.minPrice.toStringAsFixed(0)}+',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ],

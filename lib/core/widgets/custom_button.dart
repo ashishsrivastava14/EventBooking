@@ -9,6 +9,8 @@ class CustomButton extends StatelessWidget {
   final IconData? icon;
   final double? width;
   final Color? color;
+  /// When true, uses the brand gradient instead of a flat colour.
+  final bool useGradient;
 
   const CustomButton({
     super.key,
@@ -19,6 +21,7 @@ class CustomButton extends StatelessWidget {
     this.icon,
     this.width,
     this.color,
+    this.useGradient = true,
   });
 
   @override
@@ -40,18 +43,39 @@ class CustomButton extends StatelessWidget {
       );
     }
 
+    // ── Gradient filled button ─────────────────────────────────────
+    final gradient = useGradient && color == null
+        ? AppColors.primaryGradient
+        : LinearGradient(
+            colors: [color ?? AppColors.primary, color ?? AppColors.primary],
+          );
+
     return SizedBox(
       width: width ?? double.infinity,
       height: 52,
-      child: ElevatedButton(
-        onPressed: isLoading ? null : onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: color ?? AppColors.primary,
-          shape: RoundedRectangleBorder(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: isLoading ? null : gradient,
+          color: isLoading ? AppColors.primary.withValues(alpha: 0.6) : null,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: isLoading
+              ? null
+              : [
+                  BoxShadow(
+                    color: AppColors.primary.withValues(alpha: 0.40),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: isLoading ? null : onPressed,
             borderRadius: BorderRadius.circular(12),
+            child: Center(child: _buildChild(Colors.white)),
           ),
         ),
-        child: _buildChild(Colors.white),
       ),
     );
   }
@@ -79,13 +103,24 @@ class CustomButton extends StatelessWidget {
             child: Text(
               text,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: textColor),
+              style: TextStyle(
+                color: textColor,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ],
       );
     }
 
-    return Text(text);
+    return Text(
+      text,
+      style: TextStyle(
+        color: textColor,
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+      ),
+    );
   }
 }

@@ -138,20 +138,26 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 40),
             padding: const EdgeInsets.symmetric(vertical: 12),
-            decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: 0.2),
-              borderRadius: const BorderRadius.vertical(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color(0x330266DF), Color(0x550148A3)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.vertical(
                 top: Radius.circular(40),
               ),
-              border: Border.all(
-                color: AppColors.primary.withValues(alpha: 0.4),
+              border: Border(
+                top: BorderSide(color: Color(0x66026CDF)),
+                left: BorderSide(color: Color(0x66026CDF)),
+                right: BorderSide(color: Color(0x66026CDF)),
               ),
             ),
             child: const Center(
               child: Text(
                 'STAGE',
                 style: TextStyle(
-                  color: AppColors.primary,
+                  color: Color(0xFF5BABF5),
                   fontWeight: FontWeight.w700,
                   fontSize: 14,
                   letterSpacing: 4,
@@ -309,12 +315,17 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
                     ],
                   ),
                 ),
-                Text(
-                  '\$${cart.subtotal.toStringAsFixed(2)}',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.primary,
+                ShaderMask(
+                  shaderCallback: (b) =>
+                      AppColors.primaryGradient.createShader(b),
+                  blendMode: BlendMode.srcIn,
+                  child: Text(
+                    '\$${cart.subtotal.toStringAsFixed(2)}',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 16),

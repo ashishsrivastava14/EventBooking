@@ -182,9 +182,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                             vertical: 3,
                                           ),
                                           decoration: BoxDecoration(
-                                            color: AppColors.secondary,
+                                            gradient: AppColors.warmGradient,
                                             borderRadius:
                                                 BorderRadius.circular(6),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: AppColors.secondary
+                                                    .withValues(alpha: 0.4),
+                                                blurRadius: 8,
+                                                offset: const Offset(0, 2),
+                                              ),
+                                            ],
                                           ),
                                           child: const Text(
                                             'FEATURED',
@@ -419,26 +427,48 @@ class _HomeScreenState extends State<HomeScreen> {
   SliverToBoxAdapter _buildSectionHeader(String title, VoidCallback? onSeeAll) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 24, 16, 12),
+        padding: const EdgeInsets.fromLTRB(16, 24, 4, 12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-              ),
+            Row(
+              children: [
+                // Gradient left accent bar
+                Container(
+                  width: 4,
+                  height: 20,
+                  margin: const EdgeInsets.only(right: 10),
+                  decoration: BoxDecoration(
+                    gradient: AppColors.primaryGradient,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
             ),
             if (onSeeAll != null)
               GestureDetector(
                 onTap: onSeeAll,
-                child: const Text(
-                  'See All',
-                  style: TextStyle(
-                    color: AppColors.primary,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                  decoration: BoxDecoration(
+                    gradient: AppColors.primaryGradient,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Text(
+                    'See All',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),

@@ -138,13 +138,20 @@ class _BookingConfirmationScreenState
                 Container(
                   width: 100,
                   height: 100,
-                  decoration: BoxDecoration(
-                    color: AppColors.success.withValues(alpha: 0.1),
+                  decoration: const BoxDecoration(
+                    gradient: AppColors.successGradient,
                     shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0x3300C48C),
+                        blurRadius: 24,
+                        offset: Offset(0, 8),
+                      ),
+                    ],
                   ),
                   child: const Icon(
                     Icons.check_circle,
-                    color: AppColors.success,
+                    color: Colors.white,
                     size: 64,
                   ),
                 )
@@ -172,8 +179,15 @@ class _BookingConfirmationScreenState
                   padding: const EdgeInsets.symmetric(
                       horizontal: 20, vertical: 10),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withValues(alpha: 0.1),
+                    gradient: AppColors.primaryGradient,
                     borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primary.withValues(alpha: 0.3),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
                   ),
                   child: Text(
                     'Booking ID: ${booking.id.toUpperCase()}',

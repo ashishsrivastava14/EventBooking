@@ -76,7 +76,7 @@ class AdminAnalyticsScreen extends StatelessWidget {
               height: 220,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: isDark ? AppColors.card : AppColors.cardLight,
+                gradient: isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: BarChart(
@@ -140,7 +140,7 @@ class AdminAnalyticsScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: isDark ? AppColors.card : AppColors.cardLight,
+                gradient: isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
@@ -201,7 +201,7 @@ class AdminAnalyticsScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: isDark ? AppColors.card : AppColors.cardLight,
+                gradient: isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
@@ -270,7 +270,7 @@ class AdminAnalyticsScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.card : AppColors.cardLight,
+        gradient: isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(

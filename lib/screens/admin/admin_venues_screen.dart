@@ -45,7 +45,7 @@ class AdminVenuesScreen extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.card : AppColors.cardLight,
+        gradient: isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(

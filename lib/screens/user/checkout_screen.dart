@@ -67,7 +67,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: isDark ? AppColors.card : AppColors.cardLight,
+                gradient: isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
@@ -96,7 +96,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: isDark ? AppColors.card : AppColors.cardLight,
+                gradient: isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
@@ -167,7 +167,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: isDark ? AppColors.card : AppColors.cardLight,
+                gradient: isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
@@ -214,7 +214,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: isDark ? AppColors.card : AppColors.cardLight,
+                gradient: isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
@@ -285,7 +285,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: isDark ? AppColors.card : AppColors.cardLight,
+                  gradient: isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Column(

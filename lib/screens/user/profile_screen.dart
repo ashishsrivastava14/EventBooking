@@ -65,19 +65,51 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              // ── Avatar + info ──────────────────────────────────────────
-              Center(
-                child: Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 45,
-                      backgroundImage: user != null
-                          ? appImageProvider(user.avatarUrl)
-                          : null,
-                      child: user == null
-                          ? const Icon(Icons.person, size: 40)
-                          : null,
+              // ── Avatar + info with gradient header card ─────────────────
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  gradient: isDark
+                      ? const LinearGradient(
+                          colors: [Color(0xFF1A2B4E), Color(0xFF0D1432)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        )
+                      : AppColors.cardGradientLight,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: isDark
+                        ? const Color(0xFF026CDF).withValues(alpha: 0.3)
+                        : Colors.black.withValues(alpha: 0.05),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF026CDF).withValues(alpha: 0.18),
+                      blurRadius: 24,
+                      offset: const Offset(0, 6),
                     ),
+                  ],
+                ),
+                child: Center(
+                  child: Column(
+                    children: [
+                      // Avatar with gradient border ring
+                      Container(
+                        padding: const EdgeInsets.all(3),
+                        decoration: const BoxDecoration(
+                          gradient: AppColors.primaryGradient,
+                          shape: BoxShape.circle,
+                        ),
+                        child: CircleAvatar(
+                          radius: 45,
+                          backgroundImage: user != null
+                              ? appImageProvider(user.avatarUrl)
+                              : null,
+                          child: user == null
+                              ? const Icon(Icons.person, size: 40)
+                              : null,
+                        ),
+                      ),
                     const SizedBox(height: 12),
                     Text(
                       user?.fullName ?? 'Guest',
@@ -108,6 +140,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ),
+              ),
 
               const SizedBox(height: 24),
 
@@ -136,8 +169,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: isDark ? AppColors.card : AppColors.cardLight,
+                  gradient:
+                      isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
                   borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: isDark
+                        ? Colors.white.withValues(alpha: 0.06)
+                        : Colors.black.withValues(alpha: 0.04),
+                  ),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,8 +222,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 margin: const EdgeInsets.only(bottom: 8),
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
-                  color: isDark ? AppColors.card : AppColors.cardLight,
+                  gradient:
+                      isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
                   borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: isDark
+                        ? Colors.white.withValues(alpha: 0.06)
+                        : Colors.black.withValues(alpha: 0.04),
+                  ),
                 ),
                 child: SwitchListTile(
                   secondary: const Icon(Icons.dark_mode),
@@ -251,11 +296,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _statItem(String value, String label) {
     return Column(
       children: [
-        Text(value,
+        ShaderMask(
+          shaderCallback: (b) => AppColors.primaryGradient.createShader(b),
+          blendMode: BlendMode.srcIn,
+          child: Text(
+            value,
             style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w700,
-                color: AppColors.primary)),
+              fontSize: 22,
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+            ),
+          ),
+        ),
         Text(label, style: const TextStyle(fontSize: 12)),
       ],
     );
@@ -271,12 +323,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
         padding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
-          color: isDark ? AppColors.card : AppColors.cardLight,
+          gradient: isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
           borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.06)
+                : Colors.black.withValues(alpha: 0.04),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: isDark
+                  ? Colors.black.withValues(alpha: 0.2)
+                  : Colors.black.withValues(alpha: 0.05),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
         child: Row(
           children: [
-            Icon(icon, size: 22),
+            ShaderMask(
+              shaderCallback: (b) => AppColors.primaryGradient.createShader(b),
+              blendMode: BlendMode.srcIn,
+              child: Icon(icon, size: 22, color: Colors.white),
+            ),
             const SizedBox(width: 14),
             Text(title, style: const TextStyle(fontSize: 15)),
             const Spacer(),

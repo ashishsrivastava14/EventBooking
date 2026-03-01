@@ -58,7 +58,7 @@ class TicketDetailScreen extends StatelessWidget {
             Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: isDark ? AppColors.card : AppColors.cardLight,
+                gradient: isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Column(

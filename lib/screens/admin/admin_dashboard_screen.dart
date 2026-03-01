@@ -72,16 +72,29 @@ class AdminDashboardScreen extends StatelessWidget {
             const SizedBox(height: 24),
 
             // ─── Bookings Last 7 Days (Line Chart) ───
-            const Text(
-              'Bookings (Last 7 Days)',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+            Row(
+              children: [
+                Container(
+                  width: 4,
+                  height: 18,
+                  margin: const EdgeInsets.only(right: 10),
+                  decoration: BoxDecoration(
+                    gradient: AppColors.primaryGradient,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                const Text(
+                  'Bookings (Last 7 Days)',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                ),
+              ],
             ),
             const SizedBox(height: 12),
             Container(
               height: 200,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: isDark ? AppColors.card : AppColors.cardLight,
+                gradient: isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: LineChart(
@@ -139,16 +152,29 @@ class AdminDashboardScreen extends StatelessWidget {
             const SizedBox(height: 24),
 
             // ─── Revenue by Category (Pie Chart) ───
-            const Text(
-              'Revenue by Category',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+            Row(
+              children: [
+                Container(
+                  width: 4,
+                  height: 18,
+                  margin: const EdgeInsets.only(right: 10),
+                  decoration: BoxDecoration(
+                    gradient: AppColors.warmGradient,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                const Text(
+                  'Revenue by Category',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                ),
+              ],
             ),
             const SizedBox(height: 12),
             Container(
               height: 220,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: isDark ? AppColors.card : AppColors.cardLight,
+                gradient: isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Row(
@@ -199,9 +225,22 @@ class AdminDashboardScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Recent Bookings',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                Row(
+                  children: [
+                    Container(
+                      width: 4,
+                      height: 18,
+                      margin: const EdgeInsets.only(right: 10),
+                      decoration: BoxDecoration(
+                        gradient: AppColors.accentGradient,
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                    const Text(
+                      'Recent Bookings',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                    ),
+                  ],
                 ),
                 TextButton(
                   onPressed: () => context.go('/admin/bookings'),
@@ -213,7 +252,7 @@ class AdminDashboardScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: isDark ? AppColors.card : AppColors.cardLight,
+                gradient: isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
@@ -249,9 +288,22 @@ class AdminDashboardScreen extends StatelessWidget {
             const SizedBox(height: 24),
 
             // ─── Quick Actions ──────────
-            const Text(
-              'Quick Actions',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+            Row(
+              children: [
+                Container(
+                  width: 4,
+                  height: 18,
+                  margin: const EdgeInsets.only(right: 10),
+                  decoration: BoxDecoration(
+                    gradient: AppColors.successGradient,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                const Text(
+                  'Quick Actions',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                ),
+              ],
             ),
             const SizedBox(height: 12),
             Row(
@@ -280,11 +332,27 @@ class AdminDashboardScreen extends StatelessWidget {
 
   Widget _kpiCard(
       String title, String value, IconData icon, Color color, bool isDark) {
+    // Build a gradient from the KPI colour to a darker variant
+    final gradient = LinearGradient(
+      colors: [color, color.withValues(alpha: 0.6)],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    );
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.card : AppColors.cardLight,
+        gradient: isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: color.withValues(alpha: 0.25),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: color.withValues(alpha: isDark ? 0.18 : 0.10),
+            blurRadius: 14,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -293,26 +361,43 @@ class AdminDashboardScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(icon, color: color, size: 24),
+              // Icon inside gradient circle
+              Container(
+                padding: const EdgeInsets.all(7),
+                decoration: BoxDecoration(
+                  gradient: gradient,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(icon, color: Colors.white, size: 20),
+              ),
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.1),
+                  gradient: gradient,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Text(
                   '↑ 12%',
-                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ],
           ),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w700,
+          ShaderMask(
+            shaderCallback: (b) => gradient.createShader(b),
+            blendMode: BlendMode.srcIn,
+            child: Text(
+              value,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
             ),
           ),
           Text(
@@ -337,14 +422,35 @@ class AdminDashboardScreen extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 16),
           decoration: BoxDecoration(
-            color: isDark ? AppColors.card : AppColors.cardLight,
+            gradient: isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
             borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.07)
+                  : Colors.black.withValues(alpha: 0.04),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primary.withValues(alpha: 0.12),
+                blurRadius: 10,
+                offset: const Offset(0, 3),
+              ),
+            ],
           ),
           child: Column(
             children: [
-              Icon(icon, color: AppColors.primary),
-              const SizedBox(height: 6),
-              Text(label, style: const TextStyle(fontSize: 12)),
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: const BoxDecoration(
+                  gradient: AppColors.primaryGradient,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(icon, color: Colors.white, size: 20),
+              ),
+              const SizedBox(height: 8),
+              Text(label,
+                  style: const TextStyle(
+                      fontSize: 12, fontWeight: FontWeight.w500)),
             ],
           ),
         ),

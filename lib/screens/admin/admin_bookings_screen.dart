@@ -132,7 +132,7 @@ class _AdminBookingsScreenState extends State<AdminBookingsScreen> {
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.card : AppColors.cardLight,
+        gradient: isDark ? AppColors.cardGradient : AppColors.cardGradientLight,
         borderRadius: BorderRadius.circular(12),
       ),
       child: ExpansionTile(
