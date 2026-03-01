@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../core/widgets/powered_by_footer.dart';
 import 'package:provider/provider.dart';
 import '../../core/widgets/app_image.dart';
@@ -97,8 +98,16 @@ class _EventDetailScreenState extends State<EventDetailScreen>
               IconButton(
                 icon: const Icon(Icons.share),
                 onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Share link copied! (Mock)')),
+                  SharePlus.instance.share(
+                    ShareParams(
+                      subject: event.title,
+                      text:
+                          '🎟️ ${event.title}\n'
+                          '📅 ${_monthName(event.date.month)} ${event.date.day}, ${event.date.year} · ${event.time}\n'
+                          '📍 ${event.venueName}, ${event.city}\n'
+                          '💰 From \$${event.minPrice.toStringAsFixed(0)}\n\n'
+                          'Book your tickets now!',
+                    ),
                   );
                 },
               ),

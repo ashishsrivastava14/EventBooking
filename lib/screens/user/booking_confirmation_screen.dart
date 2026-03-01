@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../core/widgets/powered_by_footer.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -171,8 +172,16 @@ class BookingConfirmationScreen extends StatelessWidget {
                     child: CustomButton(
                       text: 'Share',
                       onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Share link copied! (Mock)')),
+                        SharePlus.instance.share(
+                          ShareParams(
+                            subject: 'Booking Confirmed – ${booking.eventTitle}',
+                            text:
+                                '🎉 I just booked tickets to ${booking.eventTitle}!\n'
+                                '📅 ${booking.eventDate.day}/${booking.eventDate.month}/${booking.eventDate.year}\n'
+                                '📍 ${booking.venue}\n'
+                                '💺 ${booking.tierName} · Seats: ${booking.seats.join(', ')}\n'
+                                '🔖 Ref: ${booking.id.toUpperCase()}',
+                          ),
                         );
                       },
                       isOutlined: true,

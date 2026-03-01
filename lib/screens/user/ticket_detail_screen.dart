@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../core/widgets/powered_by_footer.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../../core/theme/app_colors.dart';
@@ -33,8 +34,16 @@ class TicketDetailScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.share),
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Share link copied! (Mock)')),
+              SharePlus.instance.share(
+                ShareParams(
+                  subject: 'My Ticket – ${booking.eventTitle}',
+                  text:
+                      '🎟️ ${booking.eventTitle}\n'
+                      '📅 ${booking.eventDate.day}/${booking.eventDate.month}/${booking.eventDate.year}\n'
+                      '📍 ${booking.venue}\n'
+                      '💺 ${booking.tierName} · Seats: ${booking.seats.join(', ')}\n'
+                      '🔖 Ref: ${booking.id.toUpperCase()}',
+                ),
               );
             },
           ),
