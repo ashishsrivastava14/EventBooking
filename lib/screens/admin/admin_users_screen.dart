@@ -85,7 +85,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
       ),
       child: ExpansionTile(
         leading: CircleAvatar(
-          backgroundImage: AppImageProvider(user.avatarUrl),
+          backgroundImage: appImageProvider(user.avatarUrl),
         ),
         title: Row(
           children: [
@@ -99,7 +99,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.15),
+                  color: AppColors.primary.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Text('Admin',
@@ -114,7 +114,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
-                  color: AppColors.error.withOpacity(0.15),
+                  color: AppColors.error.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Text('Banned',

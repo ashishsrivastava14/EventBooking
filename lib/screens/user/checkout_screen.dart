@@ -249,7 +249,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             horizontal: 16, vertical: 12),
                         decoration: BoxDecoration(
                           color: isSelected
-                              ? AppColors.primary.withOpacity(0.1)
+                              ? AppColors.primary.withValues(alpha: 0.1)
                               : Colors.transparent,
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
@@ -468,13 +468,25 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   Future<void> _processPayment(
       BuildContext context, CartProvider cart, dynamic event) async {
+    // Validate CVV if credit card selected
+    if (cart.paymentMethod == 'Credit Card' && _cardCvv.trim().length < 3) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter a valid 3-digit CVV'),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
+    }
+
+    // Capture providers synchronously before any async gap
+    final auth = context.read<AuthProvider>();
+    final bookingProv = context.read<BookingProvider>();
+
     setState(() => _isProcessing = true);
     await Future.delayed(const Duration(seconds: 2));
 
     if (!mounted) return;
-
-    final auth = context.read<AuthProvider>();
-    final bookingProv = context.read<BookingProvider>();
 
     bookingProv.createBooking(
       userId: auth.currentUser?.id ?? 'u_new',
@@ -497,6 +509,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
     cart.clearCart();
     setState(() => _isProcessing = false);
+    if (!context.mounted) return;
     context.go('/booking-confirmation');
   }
 

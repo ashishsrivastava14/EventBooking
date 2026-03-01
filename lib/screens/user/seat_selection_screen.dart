@@ -117,12 +117,12 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
             margin: const EdgeInsets.symmetric(horizontal: 40),
             padding: const EdgeInsets.symmetric(vertical: 12),
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.2),
+              color: AppColors.primary.withValues(alpha: 0.2),
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(40),
               ),
               border: Border.all(
-                color: AppColors.primary.withOpacity(0.4),
+                color: AppColors.primary.withValues(alpha: 0.4),
               ),
             ),
             child: const Center(
@@ -242,8 +242,8 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
               border: Border(
                 top: BorderSide(
                   color: isDark
-                      ? Colors.white.withOpacity(0.05)
-                      : Colors.black.withOpacity(0.05),
+                      ? Colors.white.withValues(alpha: 0.05)
+                      : Colors.black.withValues(alpha: 0.05),
                 ),
               ),
             ),
@@ -307,7 +307,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
           width: 14,
           height: 14,
           decoration: BoxDecoration(
-            color: color.withOpacity(0.3),
+            color: color.withValues(alpha: 0.3),
             borderRadius: BorderRadius.circular(3),
             border: Border.all(color: color, width: 1),
           ),

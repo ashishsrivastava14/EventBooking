@@ -42,10 +42,10 @@ class SeatWidget extends StatelessWidget {
         margin: const EdgeInsets.all(2),
         decoration: BoxDecoration(
           color: state == SeatState.taken
-              ? color.withOpacity(0.3)
+              ? color.withValues(alpha: 0.3)
               : state == SeatState.selected
                   ? color
-                  : color.withOpacity(0.2),
+                  : color.withValues(alpha: 0.2),
           borderRadius: const BorderRadius.vertical(
             top: Radius.circular(8),
             bottom: Radius.circular(4),
@@ -64,7 +64,7 @@ class SeatWidget extends StatelessWidget {
               color: state == SeatState.selected
                   ? Colors.white
                   : state == SeatState.taken
-                      ? color.withOpacity(0.5)
+                      ? color.withValues(alpha: 0.5)
                       : color,
             ),
           ),

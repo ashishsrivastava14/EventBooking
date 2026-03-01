@@ -90,15 +90,15 @@ class _AdminEventsScreenState extends State<AdminEventsScreen> {
                             DataCell(
                               GestureDetector(
                                 onTap: () {
-                                  admin.toggleEventStatus(event.id, event.status == 'active' ? 'cancelled' : 'active');
+                                  admin.toggleEventStatus(event.id, event.status.toLowerCase() == 'active' ? 'Cancelled' : 'Active');
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 4),
                                   decoration: BoxDecoration(
-                                    color: event.status == 'active'
-                                        ? AppColors.success.withOpacity(0.15)
-                                        : AppColors.error.withOpacity(0.15),
+                                    color: event.status.toLowerCase() == 'active'
+                                        ? AppColors.success.withValues(alpha: 0.15)
+                                        : AppColors.error.withValues(alpha: 0.15),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: Text(
@@ -106,7 +106,7 @@ class _AdminEventsScreenState extends State<AdminEventsScreen> {
                                     style: TextStyle(
                                       fontSize: 11,
                                       fontWeight: FontWeight.w600,
-                                      color: event.status == 'active'
+                                      color: event.status.toLowerCase() == 'active'
                                           ? AppColors.success
                                           : AppColors.error,
                                     ),

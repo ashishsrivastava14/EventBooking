@@ -162,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         end: Alignment.bottomCenter,
                                         colors: [
                                           Colors.transparent,
-                                          Colors.black.withOpacity(0.8),
+                                          Colors.black.withValues(alpha: 0.8),
                                         ],
                                       ),
                                     ),
@@ -208,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           '${event.venueName} · ${event.city}',
                                           style: TextStyle(
                                             color:
-                                                Colors.white.withOpacity(0.8),
+                                                Colors.white.withValues(alpha: 0.8),
                                             fontSize: 13,
                                           ),
                                         ),
@@ -316,7 +316,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           CircleAvatar(
                             radius: 30,
                             backgroundImage:
-                                AppImageProvider(artist['image']!),
+                                appImageProvider(artist['image']!),
                           ),
                           const SizedBox(height: 8),
                           Text(
@@ -368,7 +368,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 end: Alignment.bottomCenter,
                                 colors: [
                                   Colors.transparent,
-                                  Colors.black.withOpacity(0.7),
+                                  Colors.black.withValues(alpha: 0.7),
                                 ],
                               ),
                             ),
@@ -392,7 +392,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Text(
                                   venue.city,
                                   style: TextStyle(
-                                    color: Colors.white.withOpacity(0.7),
+                                    color: Colors.white.withValues(alpha: 0.7),
                                     fontSize: 10,
                                   ),
                                 ),

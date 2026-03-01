@@ -105,8 +105,8 @@ class TicketDetailScreen extends StatelessWidget {
                             height: 1.5,
                             color: index % 2 == 0
                                 ? (isDark
-                                    ? Colors.white.withOpacity(0.1)
-                                    : Colors.black.withOpacity(0.1))
+                                    ? Colors.white.withValues(alpha: 0.1)
+                                    : Colors.black.withValues(alpha: 0.1))
                                 : Colors.transparent,
                           ),
                         ),
@@ -174,7 +174,7 @@ class TicketDetailScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 6),
                     decoration: BoxDecoration(
-                      color: _statusColor(booking.status).withOpacity(0.15),
+                      color: _statusColor(booking.status).withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(

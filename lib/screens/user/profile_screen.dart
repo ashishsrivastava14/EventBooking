@@ -38,7 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   CircleAvatar(
                     radius: 45,
                     backgroundImage: user != null
-                        ? AppImageProvider(user.avatarUrl)
+                        ? appImageProvider(user.avatarUrl)
                         : null,
                     child: user == null
                         ? const Icon(Icons.person, size: 40)
@@ -199,6 +199,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   );
                   if (confirm == true && mounted) {
                     await auth.logout();
+                    if (!context.mounted) return;
                     context.go('/login');
                   }
                 },

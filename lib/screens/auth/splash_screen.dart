@@ -55,8 +55,8 @@ class _SplashScreenState extends State<SplashScreen> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Colors.black.withOpacity(0.3),
-                Colors.black.withOpacity(0.5),
+                Colors.black.withValues(alpha: 0.3),
+                Colors.black.withValues(alpha: 0.5),
               ],
             ),
           ),
@@ -90,7 +90,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   'Your Gateway to Live Events',
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.white.withOpacity(0.6),
+                    color: Colors.white.withValues(alpha: 0.6),
                   ),
                 )
                     .animate()

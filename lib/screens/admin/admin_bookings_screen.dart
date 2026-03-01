@@ -138,7 +138,7 @@ class _AdminBookingsScreenState extends State<AdminBookingsScreen> {
       child: ExpansionTile(
         tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         leading: CircleAvatar(
-          backgroundColor: _statusColor(b.status).withOpacity(0.15),
+          backgroundColor: _statusColor(b.status).withValues(alpha: 0.15),
           child: Icon(_statusIcon(b.status),
               color: _statusColor(b.status), size: 18),
         ),
@@ -150,7 +150,7 @@ class _AdminBookingsScreenState extends State<AdminBookingsScreen> {
           padding:
               const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
           decoration: BoxDecoration(
-            color: _statusColor(b.status).withOpacity(0.15),
+            color: _statusColor(b.status).withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(

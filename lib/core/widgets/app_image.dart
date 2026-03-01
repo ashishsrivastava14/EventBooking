@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -59,38 +58,11 @@ class AppImage extends StatelessWidget {
   }
 }
 
-/// An [ImageProvider] that works with both local assets and network URLs.
-/// Use this where [ImageProvider] is required (e.g., [CircleAvatar.backgroundImage]).
-class AppImageProvider extends ImageProvider<AppImageProvider> {
-  final String imageUrl;
-  const AppImageProvider(this.imageUrl);
-
-  ImageProvider get _delegate => imageUrl.startsWith('assets/')
-      ? AssetImage(imageUrl)
-      : CachedNetworkImageProvider(imageUrl) as ImageProvider;
-
-  /// Delegate resolution entirely to the underlying provider so that
-  /// [loadImage] (which requires provider-specific key types) is never
-  /// called on this class directly.
-  @override
-  ImageStream resolve(ImageConfiguration configuration) =>
-      _delegate.resolve(configuration);
-
-  // obtainKey and loadImage are required by the abstract class but are
-  // never invoked because resolve() is fully overridden above.
-  @override
-  Future<AppImageProvider> obtainKey(ImageConfiguration configuration) =>
-      SynchronousFuture<AppImageProvider>(this);
-
-  @override
-  ImageStreamCompleter loadImage(
-      AppImageProvider key, ImageDecoderCallback decode) =>
-      throw UnimplementedError('loadImage is not used; resolve() delegates directly.');
-
-  @override
-  bool operator ==(Object other) =>
-      other is AppImageProvider && other.imageUrl == imageUrl;
-
-  @override
-  int get hashCode => imageUrl.hashCode;
+/// Returns an [ImageProvider] that works with both local assets and network URLs.
+/// Use this wherever an [ImageProvider] is required (e.g., [CircleAvatar.backgroundImage]).
+ImageProvider<Object> appImageProvider(String imageUrl) {
+  if (imageUrl.startsWith('assets/')) {
+    return AssetImage(imageUrl);
+  }
+  return CachedNetworkImageProvider(imageUrl);
 }

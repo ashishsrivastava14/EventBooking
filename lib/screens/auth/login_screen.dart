@@ -90,7 +90,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final auth = context.watch<AuthProvider>();
 
     return Scaffold(
@@ -114,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.purpleAccent.withOpacity(0.3),
+                        color: Colors.purpleAccent.withValues(alpha: 0.3),
                         blurRadius: 40,
                         spreadRadius: 8,
                       ),
@@ -134,21 +133,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(32),
                     gradient: LinearGradient(
                       colors: [
-                        Colors.white.withOpacity(0.18),
-                        Colors.white.withOpacity(0.10),
+                        Colors.white.withValues(alpha: 0.18),
+                        Colors.white.withValues(alpha: 0.10),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.08),
+                        color: Colors.black.withValues(alpha: 0.08),
                         blurRadius: 24,
                         offset: const Offset(0, 8),
                       ),
                     ],
                     border: Border.all(
-                      color: Colors.white.withOpacity(0.18),
+                      color: Colors.white.withValues(alpha: 0.18),
                       width: 1.2,
                     ),
                   ),
@@ -169,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         'Sign in to continue booking events',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white.withOpacity(0.8),
+                          color: Colors.white.withValues(alpha: 0.8),
                         ),
                       ).animate().fadeIn(delay: 100.ms, duration: 400.ms),
                       const SizedBox(height: 32),
@@ -183,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Colors.white.withOpacity(0.08),
+                                fillColor: Colors.white.withValues(alpha: 0.08),
                                 hintText: 'Email address',
                                 hintStyle: TextStyle(color: Colors.white70),
                                 prefixIcon: const Icon(Icons.email_outlined, color: Colors.white),
@@ -209,7 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Colors.white.withOpacity(0.08),
+                                fillColor: Colors.white.withValues(alpha: 0.08),
                                 hintText: 'Password',
                                 hintStyle: TextStyle(color: Colors.white70),
                                 prefixIcon: const Icon(Icons.lock_outline, color: Colors.white),
@@ -284,7 +283,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Expanded(
                             child: Divider(
-                              color: Colors.white.withOpacity(0.18),
+                              color: Colors.white.withValues(alpha: 0.18),
                             ),
                           ),
                           Padding(
@@ -293,13 +292,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               'or continue with',
                               style: TextStyle(
                                 fontSize: 13,
-                                color: Colors.white.withOpacity(0.8),
+                                color: Colors.white.withValues(alpha: 0.8),
                               ),
                             ),
                           ),
                           Expanded(
                             child: Divider(
-                              color: Colors.white.withOpacity(0.18),
+                              color: Colors.white.withValues(alpha: 0.18),
                             ),
                           ),
                         ],
@@ -377,7 +376,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           'Admin? Use admin@app.com',
                           style: TextStyle(
                             fontSize: 11,
-                            color: Colors.white.withOpacity(0.5),
+                            color: Colors.white.withValues(alpha: 0.5),
                           ),
                         ),
                       ),

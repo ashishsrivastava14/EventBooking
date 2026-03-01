@@ -159,7 +159,7 @@ class AdminAnalyticsScreen extends StatelessWidget {
                             value: pct,
                             minHeight: 8,
                             backgroundColor:
-                                AppColors.primary.withOpacity(0.1),
+                                AppColors.primary.withValues(alpha: 0.1),
                             color: AppColors.primary,
                           ),
                         ),

@@ -74,7 +74,7 @@ class _EventDetailScreenState extends State<EventDetailScreen>
                         colors: [
                           Colors.transparent,
                           (isDark ? AppColors.backgroundDark : AppColors.backgroundLight)
-                              .withOpacity(0.9),
+                              .withValues(alpha: 0.9),
                         ],
                       ),
                     ),
@@ -112,7 +112,7 @@ class _EventDetailScreenState extends State<EventDetailScreen>
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
-                      color: AppColors.primary.withOpacity(0.15),
+                      color: AppColors.primary.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
@@ -346,7 +346,7 @@ class _EventDetailScreenState extends State<EventDetailScreen>
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           color: isSelected
-                              ? AppColors.primary.withOpacity(0.1)
+                              ? AppColors.primary.withValues(alpha: 0.1)
                               : (isDark ? AppColors.card : AppColors.cardLight),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
@@ -450,8 +450,8 @@ class _EventDetailScreenState extends State<EventDetailScreen>
           border: Border(
             top: BorderSide(
               color: isDark
-                  ? Colors.white.withOpacity(0.05)
-                  : Colors.black.withOpacity(0.05),
+                  ? Colors.white.withValues(alpha: 0.05)
+                  : Colors.black.withValues(alpha: 0.05),
             ),
           ),
         ),

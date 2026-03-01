@@ -98,8 +98,8 @@ class TicketCard extends StatelessWidget {
                       height: 1,
                       color: index % 2 == 0
                           ? (isDark
-                              ? Colors.white.withOpacity(0.1)
-                              : Colors.black.withOpacity(0.1))
+                              ? Colors.white.withValues(alpha: 0.1)
+                              : Colors.black.withValues(alpha: 0.1))
                           : Colors.transparent,
                     ),
                   ),
@@ -163,7 +163,7 @@ class TicketCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.15),
+        color: color.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
