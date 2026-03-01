@@ -55,6 +55,11 @@ class AdminProvider extends ChangeNotifier {
     }
   }
 
+  void deleteUser(String userId) {
+    _users.removeWhere((u) => u.id == userId);
+    notifyListeners();
+  }
+
   // ─── VENUES ────────────────────────────────────────────
   void addVenue(VenueModel venue) {
     _venues.add(venue);
