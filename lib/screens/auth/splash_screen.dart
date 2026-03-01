@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final auth = context.read<AuthProvider>();
     if (auth.isAuthenticated) {
       if (auth.isAdmin) {
-        context.go('/admin');
+        context.go('/admin/dashboard');
       } else {
         context.go('/home');
       }

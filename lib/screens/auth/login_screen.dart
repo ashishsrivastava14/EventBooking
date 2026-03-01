@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (success && mounted) {
       if (auth.isAdmin) {
-        context.go('/admin');
+        context.go('/admin/dashboard');
       } else {
         context.go('/home');
       }
@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
         height: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/bg_splash_orange.png'),
+            image: AssetImage('assets/images/bg_splash_organge.png'),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
               Color(0x66000000),

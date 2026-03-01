@@ -5,6 +5,7 @@ import 'package:fl_chart/fl_chart.dart';
 import '../../core/widgets/app_background.dart';
 import '../../core/theme/app_colors.dart';
 import '../../providers/admin_provider.dart';
+import '../../providers/auth_provider.dart';
 import '../../providers/booking_provider.dart';
 
 class AdminDashboardScreen extends StatelessWidget {
@@ -28,6 +29,16 @@ class AdminDashboardScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
             onPressed: () {},
+          ),
+          Consumer<AuthProvider>(
+            builder: (context, auth, _) => IconButton(
+              icon: const Icon(Icons.logout),
+              tooltip: 'Logout',
+              onPressed: () async {
+                await auth.logout();
+                if (context.mounted) context.go('/login');
+              },
+            ),
           ),
         ],
       ),
@@ -254,7 +265,7 @@ class AdminDashboardScreen extends StatelessWidget {
                 }, isDark),
                 const SizedBox(width: 12),
                 _quickAction(Icons.location_on, 'Venues', () {
-                  context.go('/admin/venues');
+                  context.push('/admin/venues');
                 }, isDark),
               ],
             ),
