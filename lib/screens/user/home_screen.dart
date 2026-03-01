@@ -318,24 +318,30 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemCount: MockData.topArtists.length,
                   itemBuilder: (context, index) {
                     final artist = MockData.topArtists[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 16),
-                      child: Column(
-                        children: [
-                          CircleAvatar(
-                            radius: 30,
-                            backgroundImage:
-                                appImageProvider(artist['image']!),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            artist['name']!,
-                            style: const TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w500,
+                    return GestureDetector(
+                      onTap: () {
+                        context.read<EventProvider>().setSearchQuery(artist['name']!);
+                        context.push('/explore');
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 16),
+                        child: Column(
+                          children: [
+                            CircleAvatar(
+                              radius: 30,
+                              backgroundImage:
+                                  appImageProvider(artist['image']!),
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 8),
+                            Text(
+                              artist['name']!,
+                              style: const TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -354,7 +360,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemCount: MockData.venues.length,
                   itemBuilder: (context, index) {
                     final venue = MockData.venues[index];
-                    return Container(
+                    return GestureDetector(
+                      onTap: () {
+                        context.read<EventProvider>().setSearchQuery(venue.name);
+                        context.push('/explore');
+                      },
+                      child: Container(
                       width: 160,
                       margin: const EdgeInsets.only(right: 12),
                       decoration: BoxDecoration(
@@ -410,6 +421,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ],
                       ),
+                    ),
                     );
                   },
                 ),
