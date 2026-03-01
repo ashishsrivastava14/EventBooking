@@ -44,4 +44,34 @@ class BookingModel {
     this.status = BookingStatus.confirmed,
     required this.qrData,
   });
+
+  BookingModel copyWith({
+    String? userId,
+    String? userName,
+    String? userEmail,
+    BookingStatus? status,
+  }) {
+    return BookingModel(
+      id: id,
+      userId: userId ?? this.userId,
+      userName: userName ?? this.userName,
+      userEmail: userEmail ?? this.userEmail,
+      eventId: eventId,
+      eventTitle: eventTitle,
+      eventImageUrl: eventImageUrl,
+      venue: venue,
+      eventDate: eventDate,
+      tierName: tierName,
+      seats: seats,
+      subtotal: subtotal,
+      serviceFee: serviceFee,
+      discount: discount,
+      total: total,
+      promoCode: promoCode,
+      paymentMethod: paymentMethod,
+      bookingDate: bookingDate,
+      status: status ?? this.status,
+      qrData: qrData,
+    );
+  }
 }

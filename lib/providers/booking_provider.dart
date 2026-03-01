@@ -97,6 +97,23 @@ class BookingProvider extends ChangeNotifier {
     }
   }
 
+  /// Transfers a booking to a new email address.
+  /// Returns true on success, false if the booking was not found or
+  /// cannot be transferred (e.g. already cancelled / checked-in).
+  bool transferBooking(String bookingId, String recipientEmail) {
+    final index = _bookings.indexWhere((b) => b.id == bookingId);
+    if (index == -1) return false;
+    final booking = _bookings[index];
+    if (booking.status == BookingStatus.cancelled ||
+        booking.status == BookingStatus.checkedIn) return false;
+    _bookings[index] = booking.copyWith(
+      userEmail: recipientEmail.trim().toLowerCase(),
+      userName: recipientEmail.trim().toLowerCase(),
+    );
+    notifyListeners();
+    return true;
+  }
+
   void checkInBooking(String bookingId) {
     final index = _bookings.indexWhere((b) => b.id == bookingId);
     if (index != -1) {

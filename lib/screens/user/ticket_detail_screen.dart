@@ -203,13 +203,7 @@ class TicketDetailScreen extends StatelessWidget {
 
             CustomButton(
               text: 'Transfer Ticket',
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Transfer feature coming soon! (UI only)'),
-                  ),
-                );
-              },
+              onPressed: () => _showTransferDialog(context, booking),
               isOutlined: true,
               icon: Icons.send,
             ),
@@ -217,6 +211,116 @@ class TicketDetailScreen extends StatelessWidget {
         ),
         ),
       ),
+    );
+  }
+
+  void _showTransferDialog(BuildContext context, BookingModel booking) {
+    if (booking.status == BookingStatus.cancelled ||
+        booking.status == BookingStatus.checkedIn) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            booking.status == BookingStatus.checkedIn
+                ? 'Cannot transfer a checked-in ticket.'
+                : 'Cannot transfer a cancelled ticket.',
+          ),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
+    }
+
+    final emailController = TextEditingController();
+    final formKey = GlobalKey<FormState>();
+
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        final isDark =
+            Theme.of(dialogContext).brightness == Brightness.dark;
+        return AlertDialog(
+          backgroundColor:
+              isDark ? AppColors.card : AppColors.cardLight,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          title: const Text('Transfer Ticket',
+              style:
+                  TextStyle(fontWeight: FontWeight.w700, fontSize: 18)),
+          content: Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Enter the recipient\'s email address. Ownership of "${booking.eventTitle}" will be transferred to them.',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: isDark
+                        ? AppColors.textSecondaryDark
+                        : AppColors.textSecondaryLight,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  autofocus: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Recipient Email',
+                    prefixIcon: Icon(Icons.email_outlined),
+                    hintText: 'someone@example.com',
+                  ),
+                  validator: (v) {
+                    if (v == null || v.trim().isEmpty) {
+                      return 'Please enter an email address.';
+                    }
+                    final emailRegex = RegExp(
+                        r'^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$');
+                    if (!emailRegex.hasMatch(v.trim())) {
+                      return 'Please enter a valid email address.';
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.send, size: 16),
+              label: const Text('Transfer'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                foregroundColor: Colors.white,
+              ),
+              onPressed: () {
+                if (!formKey.currentState!.validate()) return;
+                final bookingProv =
+                    context.read<BookingProvider>();
+                final success = bookingProv.transferBooking(
+                    booking.id, emailController.text);
+                Navigator.pop(dialogContext);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      success
+                          ? '✅ Ticket transferred to ${emailController.text.trim()}!'
+                          : 'Transfer failed. Please try again.',
+                    ),
+                    backgroundColor:
+                        success ? AppColors.success : AppColors.error,
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
