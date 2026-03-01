@@ -492,30 +492,58 @@ class _HomeScreenState extends State<HomeScreen> {
   void _showCityPicker(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      builder: (_) => Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (_) => DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 0.5,
+        minChildSize: 0.3,
+        maxChildSize: 0.85,
+        builder: (context, scrollController) => Column(
           children: [
-            const Text(
-              'Select City',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+            const SizedBox(height: 12),
+            Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(2),
+              ),
             ),
             const SizedBox(height: 16),
-            ...MockData.cities
-                .where((c) => c != 'All Cities')
-                .map((city) => ListTile(
-                      leading: const Icon(Icons.location_city),
-                      title: Text(city),
-                      selected: _selectedCity == city,
-                      selectedColor: AppColors.primary,
-                      onTap: () {
-                        setState(() => _selectedCity = city);
-                        context.read<EventProvider>().setCity(city);
-                        Navigator.pop(context);
-                      },
-                    )),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Select City',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Expanded(
+              child: ListView(
+                controller: scrollController,
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                children: MockData.cities
+                    .where((c) => c != 'All Cities')
+                    .map((city) => ListTile(
+                          leading: const Icon(Icons.location_city),
+                          title: Text(city),
+                          selected: _selectedCity == city,
+                          selectedColor: AppColors.primary,
+                          onTap: () {
+                            setState(() => _selectedCity = city);
+                            context.read<EventProvider>().setCity(city);
+                            Navigator.pop(context);
+                          },
+                        ))
+                    .toList(),
+              ),
+            ),
           ],
         ),
       ),
