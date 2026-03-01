@@ -35,12 +35,32 @@ class AdminAnalyticsScreen extends StatelessWidget {
                 _kpiTile('Total Revenue',
                     '\$${bookingProv.totalRevenue.toStringAsFixed(0)}',
                     Colors.green, isDark),
-                _kpiTile('Avg Ticket Price', '\$72',
+                _kpiTile('Avg Ticket Price',
+                    '\$${admin.avgTicketPrice.toStringAsFixed(0)}',
                     AppColors.primary, isDark),
-                _kpiTile('Conversion Rate', '34%',
+                _kpiTile('Cancellation Rate',
+                    '${admin.cancellationRate.toStringAsFixed(1)}%',
                     AppColors.secondary, isDark),
-                _kpiTile('Repeat Customers', '62%',
+                _kpiTile('Active Users',
+                    '${admin.activeUsers}',
                     const Color(0xFF9C27B0), isDark),
+              ],
+            ),
+            const SizedBox(height: 12),
+            GridView.count(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: 2,
+              mainAxisSpacing: 12,
+              crossAxisSpacing: 12,
+              childAspectRatio: 1.8,
+              children: [
+                _kpiTile('Peak Booking Hour',
+                    admin.peakBookingHour,
+                    AppColors.error, isDark),
+                _kpiTile('Total Events',
+                    '${admin.events.length}',
+                    const Color(0xFF00BCD4), isDark),
               ],
             ),
 
@@ -179,16 +199,15 @@ class AdminAnalyticsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Container(
-              height: 260,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: isDark ? AppColors.card : AppColors.cardLight,
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Row(
+              child: Column(
                 children: [
-                  Expanded(
-                    flex: 3,
+                  SizedBox(
+                    height: 200,
                     child: PieChart(
                       PieChartData(
                         sections: _donutSections(admin.categoryRevenue),
@@ -197,52 +216,42 @@ class AdminAnalyticsScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: admin.categoryRevenue.entries.map((e) {
-                        final idx = admin.categoryRevenue.keys
-                            .toList()
-                            .indexOf(e.key);
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 8),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 12,
-                                height: 12,
-                                decoration: BoxDecoration(
-                                  color:
-                                      _donutColors[idx % _donutColors.length],
-                                  borderRadius: BorderRadius.circular(3),
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  children: [
-                                    Text(e.key,
-                                        style:
-                                            const TextStyle(fontSize: 12)),
-                                    Text(
-                                      '\$${e.value.toStringAsFixed(0)}',
-                                      style: const TextStyle(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                  const SizedBox(height: 16),
+                  // Legend as a Wrap — never overflows
+                  Wrap(
+                    spacing: 16,
+                    runSpacing: 10,
+                    children: admin.categoryRevenue.entries
+                        .toList()
+                        .asMap()
+                        .entries
+                        .map((entry) {
+                      final idx = entry.key;
+                      final e = entry.value;
+                      return Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 11,
+                            height: 11,
+                            decoration: BoxDecoration(
+                              color: _donutColors[idx % _donutColors.length],
+                              borderRadius: BorderRadius.circular(3),
+                            ),
                           ),
-                        );
-                      }).toList(),
-                    ),
+                          const SizedBox(width: 5),
+                          Text(
+                            '${e.key}  \$${e.value.toStringAsFixed(0)}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: isDark
+                                  ? AppColors.textSecondaryDark
+                                  : AppColors.textSecondaryLight,
+                            ),
+                          ),
+                        ],
+                      );
+                    }).toList(),
                   ),
                 ],
               ),
