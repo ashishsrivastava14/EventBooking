@@ -8,12 +8,18 @@ class AuthProvider extends ChangeNotifier {
   bool _isAuthenticated = false;
   bool _isLoading = false;
   bool _hasSeenOnboarding = false;
+  ThemeMode _themeMode = ThemeMode.dark;
+  bool _pushNotifications = true;
+  bool _emailNotifications = false;
 
   UserModel? get currentUser => _currentUser;
   bool get isAuthenticated => _isAuthenticated;
   bool get isLoading => _isLoading;
   bool get isAdmin => _currentUser?.isAdmin ?? false;
   bool get hasSeenOnboarding => _hasSeenOnboarding;
+  ThemeMode get themeMode => _themeMode;
+  bool get pushNotifications => _pushNotifications;
+  bool get emailNotifications => _emailNotifications;
 
   AuthProvider() {
     _loadAuthState();
@@ -22,6 +28,11 @@ class AuthProvider extends ChangeNotifier {
   Future<void> _loadAuthState() async {
     final prefs = await SharedPreferences.getInstance();
     _hasSeenOnboarding = prefs.getBool('hasSeenOnboarding') ?? false;
+    _themeMode = (prefs.getBool('darkMode') ?? true)
+        ? ThemeMode.dark
+        : ThemeMode.light;
+    _pushNotifications = prefs.getBool('pushNotifications') ?? true;
+    _emailNotifications = prefs.getBool('emailNotifications') ?? false;
     final savedEmail = prefs.getString('userEmail');
     if (savedEmail != null) {
       _currentUser = MockData.users.firstWhere(
@@ -40,17 +51,42 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> login(String email, String password, {bool rememberMe = false}) async {
+  void toggleTheme() async {
+    _themeMode =
+        _themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+    notifyListeners();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('darkMode', _themeMode == ThemeMode.dark);
+  }
+
+  Future<void> updateNotificationSettings({
+    required bool push,
+    required bool email,
+  }) async {
+    _pushNotifications = push;
+    _emailNotifications = email;
+    notifyListeners();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('pushNotifications', push);
+    await prefs.setBool('emailNotifications', email);
+  }
+
+  Future<void> updateProfile(String fullName, String phone) async {
+    if (_currentUser == null) return;
+    _currentUser = _currentUser!.copyWith(fullName: fullName, phone: phone);
+    notifyListeners();
+  }
+
+  Future<bool> login(String email, String password,
+      {bool rememberMe = false}) async {
     _isLoading = true;
     notifyListeners();
 
-    // Simulate network delay
     await Future.delayed(const Duration(seconds: 1));
 
     if (email == 'admin@app.com') {
-      _currentUser = MockData.users[0]; // Admin user
+      _currentUser = MockData.users[0];
     } else {
-      // Mock: accept any email/password
       _currentUser = MockData.users.firstWhere(
         (u) => u.email == email,
         orElse: () => UserModel(
@@ -114,7 +150,9 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Legacy — kept for backwards compatibility.
   void toggleDarkMode(bool isDark) {
+    _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
     notifyListeners();
   }
 }

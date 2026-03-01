@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'core/theme/app_theme.dart';
 import 'core/widgets/powered_by_footer.dart';
+import 'providers/auth_provider.dart';
 import 'screens/auth/splash_screen.dart';
 import 'screens/auth/onboarding_screen.dart';
 import 'screens/auth/login_screen.dart';
@@ -25,24 +27,10 @@ import 'screens/admin/admin_users_screen.dart';
 import 'screens/admin/admin_venues_screen.dart';
 import 'screens/admin/admin_analytics_screen.dart';
 
-class EventBookingApp extends StatefulWidget {
+class EventBookingApp extends StatelessWidget {
   const EventBookingApp({super.key});
 
-  @override
-  State<EventBookingApp> createState() => _EventBookingAppState();
-}
-
-class _EventBookingAppState extends State<EventBookingApp> {
-  ThemeMode _themeMode = ThemeMode.dark;
-
-  void _toggleTheme() {
-    setState(() {
-      _themeMode =
-          _themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
-    });
-  }
-
-  late final GoRouter _router = GoRouter(
+  static final GoRouter _router = GoRouter(
     initialLocation: '/splash',
     routes: [
       GoRoute(path: '/splash', builder: (_, __) => const SplashScreen()),
@@ -56,7 +44,7 @@ class _EventBookingAppState extends State<EventBookingApp> {
       // ─── User Shell (Bottom Nav) ──────────────────
       ShellRoute(
         builder: (context, state, child) =>
-            _UserShell(onToggleTheme: _toggleTheme, child: child),
+            _UserShell(child: child),
         routes: [
           GoRoute(path: '/home', builder: (_, __) => const HomeScreen()),
           GoRoute(
@@ -139,12 +127,14 @@ class _EventBookingAppState extends State<EventBookingApp> {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = context.select<AuthProvider, ThemeMode>(
+        (auth) => auth.themeMode);
     return MaterialApp.router(
       title: 'EventBooking',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: _themeMode,
+      themeMode: themeMode,
       routerConfig: _router,
     );
   }
@@ -153,8 +143,7 @@ class _EventBookingAppState extends State<EventBookingApp> {
 // ─── User Bottom Navigation Shell ────────────────────────────────────────────
 class _UserShell extends StatelessWidget {
   final Widget child;
-  final VoidCallback onToggleTheme;
-  const _UserShell({required this.child, required this.onToggleTheme});
+  const _UserShell({required this.child});
 
   @override
   Widget build(BuildContext context) {

@@ -20,4 +20,23 @@ class UserModel {
     this.bookingCount = 0,
     this.isBanned = false,
   });
+
+  UserModel copyWith({
+    String? fullName,
+    String? phone,
+    String? email,
+    String? avatarUrl,
+  }) {
+    return UserModel(
+      id: id,
+      fullName: fullName ?? this.fullName,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      avatarUrl: avatarUrl ?? this.avatarUrl,
+      isAdmin: isAdmin,
+      joinDate: joinDate,
+      bookingCount: bookingCount,
+      isBanned: isBanned,
+    );
+  }
 }
