@@ -114,7 +114,9 @@ class _AdminAddEditEventScreenState extends State<AdminAddEditEventScreen> {
           currentStep: _currentStep,
           onStepContinue: () {
             if (_currentStep < 2) {
-              setState(() => _currentStep++);
+              if (_formKey.currentState!.validate()) {
+                setState(() => _currentStep++);
+              }
             } else {
               _saveEvent();
             }
@@ -196,7 +198,7 @@ class _AdminAddEditEventScreenState extends State<AdminAddEditEventScreen> {
                   ),
                   const SizedBox(height: 12),
                   DropdownButtonFormField<String>(
-                    initialValue: _category,
+                    value: _category,
                     decoration:
                         const InputDecoration(labelText: 'Category'),
                     items: _categories
@@ -384,17 +386,26 @@ class _AdminAddEditEventScreenState extends State<AdminAddEditEventScreen> {
   }
 
   void _saveEvent() {
+    if (!_formKey.currentState!.validate()) return;
     final admin = context.read<AdminProvider>();
-    final tiers = _tiers.map((t) => TicketTier(
-      name: t['name'] ?? 'General',
-      price: (t['price'] as num).toDouble(),
-      totalQuantity: t['qty'] as int,
-      soldQuantity: 0,
-    )).toList();
+    // Preserve soldQuantity from existing tiers when editing
+    final tiers = _tiers.asMap().entries.map((entry) {
+      final i = entry.key;
+      final t = entry.value;
+      final existingSold = (_isEdit && _existing != null && i < _existing!.ticketTiers.length)
+          ? _existing!.ticketTiers[i].soldQuantity
+          : 0;
+      return TicketTier(
+        name: t['name'] ?? 'General',
+        price: (t['price'] as num).toDouble(),
+        totalQuantity: t['qty'] as int,
+        soldQuantity: existingSold,
+      );
+    }).toList();
 
     final event = EventModel(
       id: _isEdit ? _existing!.id : 'evt_new_${DateTime.now().millisecondsSinceEpoch}',
-      title: _titleCtrl.text,
+      title: _titleCtrl.text.trim(),
       description: _descCtrl.text,
       imageUrl: _imageUrlCtrl.text.isEmpty
           ? 'https://picsum.photos/800/400'
@@ -406,11 +417,12 @@ class _AdminAddEditEventScreenState extends State<AdminAddEditEventScreen> {
       venueName: _venueNameCtrl.text.isEmpty ? 'TBD' : _venueNameCtrl.text,
       city: _cityCtrl.text.isEmpty ? 'TBD' : _cityCtrl.text,
       ticketTiers: tiers,
-      artists: [],
-      status: 'active',
-      rating: 0.0,
-      reviewCount: 0,
-      isFeatured: false,
+      artists: _isEdit ? (_existing?.artists ?? []) : [],
+      status: _isEdit ? (_existing?.status ?? 'Active') : 'Active',
+      rating: _isEdit ? (_existing?.rating ?? 0.0) : 0.0,
+      reviewCount: _isEdit ? (_existing?.reviewCount ?? 0) : 0,
+      isFeatured: _isEdit ? (_existing?.isFeatured ?? false) : false,
+      isTrending: _isEdit ? (_existing?.isTrending ?? false) : false,
     );
 
     if (_isEdit) {
