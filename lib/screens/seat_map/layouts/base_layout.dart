@@ -88,11 +88,27 @@ abstract class BaseLayout extends StatelessWidget {
       );
     }
 
+    // Calculate minimum size required for the seat grid
+    const seatSize = 22.0;
+    const seatMargin = 1.5;
+    const padding = 8.0; // 4px padding on each side
+    const rowLabelWidth = 16.0;
+    final neededW =
+        rowLabelWidth + zone.seatsPerRow * (seatSize + seatMargin * 2) + padding;
+    final neededH =
+        24.0 + 4.0 + zone.rows * (seatSize + seatMargin * 2) + padding; // title + gap + rows
+    final gridW = neededW > zrd.bounds.width ? neededW : zrd.bounds.width;
+    final gridH = neededH > zrd.bounds.height ? neededH : zrd.bounds.height;
+
+    // Center the expanded grid around the original zone center
+    final cx = zrd.bounds.left + zrd.bounds.width / 2;
+    final cy = zrd.bounds.top + zrd.bounds.height / 2;
+
     return Positioned(
-      left: zrd.bounds.left,
-      top: zrd.bounds.top,
-      width: zrd.bounds.width,
-      height: zrd.bounds.height,
+      left: cx - gridW / 2,
+      top: cy - gridH / 2,
+      width: gridW,
+      height: gridH,
       child: buildSeatGrid(zone),
     );
   }
@@ -190,23 +206,26 @@ abstract class BaseLayout extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             for (int row = 0; row < zone.rows; row++)
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    width: 16,
-                    child: Text(
-                      String.fromCharCode(65 + row),
-                      style: TextStyle(
-                        fontSize: 8,
-                        fontWeight: FontWeight.w700,
-                        color: zone.color.withValues(alpha: 0.7),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      width: 16,
+                      child: Text(
+                        String.fromCharCode(65 + row),
+                        style: TextStyle(
+                          fontSize: 8,
+                          fontWeight: FontWeight.w700,
+                          color: zone.color.withValues(alpha: 0.7),
+                        ),
                       ),
                     ),
-                  ),
-                  for (int col = 0; col < zone.seatsPerRow; col++)
-                    _buildSeat(zone, row, col, seatSize, seatMargin),
-                ],
+                    for (int col = 0; col < zone.seatsPerRow; col++)
+                      _buildSeat(zone, row, col, seatSize, seatMargin),
+                  ],
+                ),
               ),
           ],
         ),
