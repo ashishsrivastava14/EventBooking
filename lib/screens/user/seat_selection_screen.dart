@@ -109,9 +109,20 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
                     label: Text(zone),
                     selected: isSelected,
                     selectedColor: AppColors.primary,
+                    backgroundColor: isDark
+                        ? AppColors.card
+                        : AppColors.cardLight,
+                    side: BorderSide(
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.15)
+                          : Colors.black.withValues(alpha: 0.15),
+                    ),
                     labelStyle: TextStyle(
-                      color: isSelected ? Colors.white : null,
+                      color: isSelected
+                          ? Colors.white
+                          : (isDark ? Colors.white : Colors.black87),
                       fontSize: 12,
+                      fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
                     ),
                     onSelected: (_) =>
                         setState(() => _selectedZone = zone),
