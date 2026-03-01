@@ -105,7 +105,9 @@ class BookingProvider extends ChangeNotifier {
     if (index == -1) return false;
     final booking = _bookings[index];
     if (booking.status == BookingStatus.cancelled ||
-        booking.status == BookingStatus.checkedIn) return false;
+        booking.status == BookingStatus.checkedIn) {
+      return false;
+    }
     _bookings[index] = booking.copyWith(
       userEmail: recipientEmail.trim().toLowerCase(),
       userName: recipientEmail.trim().toLowerCase(),
