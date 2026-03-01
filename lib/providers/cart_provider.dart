@@ -9,6 +9,10 @@ class CartProvider extends ChangeNotifier {
   double _discountPercent = 0;
   String _paymentMethod = 'Credit Card';
 
+  // ── Zone-based pricing maps ────────────────────────────
+  final Map<String, double> _seatPrices = {};
+  final Map<String, String> _seatZones = {};
+
   String? get eventId => _eventId;
   String? get tierName => _tierName;
   double get tierPrice => _tierPrice;
@@ -16,8 +20,17 @@ class CartProvider extends ChangeNotifier {
   String get promoCode => _promoCode;
   double get discountPercent => _discountPercent;
   String get paymentMethod => _paymentMethod;
+  Map<String, String> get seatZones => Map.unmodifiable(_seatZones);
+  Map<String, double> get seatPrices => Map.unmodifiable(_seatPrices);
 
-  double get subtotal => _selectedSeats.length * _tierPrice;
+  /// Subtotal: uses per-seat prices when available, else uniform tier price.
+  double get subtotal {
+    if (_seatPrices.isNotEmpty) {
+      return _seatPrices.values.fold(0.0, (sum, p) => sum + p);
+    }
+    return _selectedSeats.length * _tierPrice;
+  }
+
   double get serviceFee => subtotal * 0.10;
   double get discount => subtotal * _discountPercent;
   double get total => subtotal + serviceFee - discount;
@@ -29,6 +42,8 @@ class CartProvider extends ChangeNotifier {
     _tierName = tierName;
     _tierPrice = tierPrice;
     _selectedSeats.clear();
+    _seatPrices.clear();
+    _seatZones.clear();
     _promoCode = '';
     _discountPercent = 0;
     notifyListeners();
@@ -40,9 +55,12 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Legacy toggle (uniform pricing). Kept for backward compatibility.
   bool toggleSeat(String seatId) {
     if (_selectedSeats.contains(seatId)) {
       _selectedSeats.remove(seatId);
+      _seatPrices.remove(seatId);
+      _seatZones.remove(seatId);
       notifyListeners();
       return true;
     } else {
@@ -50,6 +68,29 @@ class CartProvider extends ChangeNotifier {
         return false; // Max 6 seats
       }
       _selectedSeats.add(seatId);
+      notifyListeners();
+      return true;
+    }
+  }
+
+  /// Toggle a seat with its zone-specific price. Returns false if max reached.
+  bool toggleSeatWithPrice(String seatId, double price, String zoneName) {
+    if (_selectedSeats.contains(seatId)) {
+      _selectedSeats.remove(seatId);
+      _seatPrices.remove(seatId);
+      _seatZones.remove(seatId);
+      notifyListeners();
+      return true;
+    } else {
+      if (_selectedSeats.length >= 6) {
+        return false;
+      }
+      _selectedSeats.add(seatId);
+      _seatPrices[seatId] = price;
+      _seatZones[seatId] = zoneName;
+      // Update tier summary for checkout display
+      _tierName = zoneName;
+      _tierPrice = price;
       notifyListeners();
       return true;
     }
@@ -78,6 +119,8 @@ class CartProvider extends ChangeNotifier {
     _tierName = null;
     _tierPrice = 0;
     _selectedSeats.clear();
+    _seatPrices.clear();
+    _seatZones.clear();
     _promoCode = '';
     _discountPercent = 0;
     _paymentMethod = 'Credit Card';

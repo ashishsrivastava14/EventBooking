@@ -7,6 +7,7 @@ class VenueModel {
   final String imageUrl;
   final int rows;
   final int seatsPerRow;
+  final String venueType; // "stadium", "arena", "theatre", "club", "circuit"
 
   const VenueModel({
     required this.id,
@@ -17,5 +18,6 @@ class VenueModel {
     required this.imageUrl,
     this.rows = 8,
     this.seatsPerRow = 10,
+    this.venueType = 'stadium',
   });
 }

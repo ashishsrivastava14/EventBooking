@@ -1,4 +1,5 @@
 import 'ticket_model.dart';
+import 'seat_map_config.dart';
 
 class EventModel {
   final String id;
@@ -18,6 +19,9 @@ class EventModel {
   final double rating;
   final int reviewCount;
   String status; // Active, Cancelled, Draft
+  final String? eventCategory; // "cricket", "football", "concert", etc.
+  final String? venueType; // "stadium", "arena", "theatre", "club"
+  final SeatMapConfig? seatMapConfig;
 
   EventModel({
     required this.id,
@@ -37,7 +41,26 @@ class EventModel {
     this.rating = 4.5,
     this.reviewCount = 120,
     this.status = 'Active',
+    this.eventCategory,
+    this.venueType,
+    this.seatMapConfig,
   });
+
+  /// Returns the specific event category for seat map layout.
+  /// Falls back to deriving from the generic [category] field.
+  String get effectiveEventCategory {
+    if (eventCategory != null) return eventCategory!;
+    switch (category.toLowerCase()) {
+      case 'concerts':
+        return 'concert';
+      case 'theatre':
+        return 'theatre';
+      case 'comedy':
+        return 'comedy';
+      default:
+        return 'concert';
+    }
+  }
 
   double get minPrice {
     if (ticketTiers.isEmpty) return 0;

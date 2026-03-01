@@ -1,8 +1,10 @@
-﻿import '../../models/event_model.dart';
+﻿import 'package:flutter/material.dart';
+import '../../models/event_model.dart';
 import '../../models/venue_model.dart';
 import '../../models/user_model.dart';
 import '../../models/booking_model.dart';
 import '../../models/ticket_model.dart';
+import '../../models/seating_zone.dart';
 
 class MockData {
   // â”€â”€â”€ VENUES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -135,6 +137,7 @@ class MockData {
         TicketTier(name: 'Lower Level', price: 350.00, totalQuantity: 3000, soldQuantity: 2900),
         TicketTier(name: 'Courtside', price: 1200.00, totalQuantity: 100, soldQuantity: 95),
       ],
+      eventCategory: 'basketball',
       isFeatured: true,
       isTrending: true,
       rating: 4.7,
@@ -250,6 +253,7 @@ class MockData {
         TicketTier(name: 'Gold', price: 500.00, totalQuantity: 2000, soldQuantity: 1900),
         TicketTier(name: 'Cageside', price: 1500.00, totalQuantity: 100, soldQuantity: 90),
       ],
+      eventCategory: 'boxing',
       isFeatured: false,
       isTrending: true,
       rating: 4.7,
@@ -318,6 +322,7 @@ class MockData {
         TicketTier(name: 'Court Seat', price: 380.00, totalQuantity: 5000, soldQuantity: 4900),
         TicketTier(name: 'Debenture', price: 850.00, totalQuantity: 500, soldQuantity: 480),
       ],
+      eventCategory: 'tennis',
       isFeatured: false,
       isTrending: true,
       rating: 4.9,
@@ -408,6 +413,7 @@ class MockData {
         TicketTier(name: 'Lower Tier', price: 95.00, totalQuantity: 2000, soldQuantity: 1500),
         TicketTier(name: 'Pitch Side', price: 250.00, totalQuantity: 300, soldQuantity: 200),
       ],
+      eventCategory: 'football',
       isFeatured: false,
       isTrending: false,
       rating: 4.4,
@@ -479,6 +485,7 @@ class MockData {
         TicketTier(name: 'Lower Bowl', price: 280.00, totalQuantity: 3000, soldQuantity: 2700),
         TicketTier(name: 'Ringside', price: 1200.00, totalQuantity: 200, soldQuantity: 180),
       ],
+      eventCategory: 'boxing',
       isFeatured: false,
       isTrending: true,
       rating: 4.6,
@@ -620,6 +627,7 @@ class MockData {
         TicketTier(name: 'Lower Tier', price: 195.00, totalQuantity: 10000, soldQuantity: 9600),
         TicketTier(name: 'Platinum', price: 450.00, totalQuantity: 1000, soldQuantity: 950),
       ],
+      eventCategory: 'football',
       isFeatured: false,
       isTrending: true,
       rating: 4.8,
@@ -1265,5 +1273,250 @@ class MockData {
   static const List<String> vipSeats = [
     'A3', 'A4', 'A5', 'A6',
     'B1', 'B2', 'B5', 'B6', 'B7', 'B8',
+  ];
+
+  // ══════════════════════════════════════════════════════════
+  // ── SEAT MAP MODULE HELPERS ──────────────────────────────
+  // ══════════════════════════════════════════════════════════
+
+  /// Returns the venue for a given event, falling back to the first venue.
+  static VenueModel getVenueForEvent(EventModel event) {
+    return venues.firstWhere(
+      (v) => v.id == event.venueId,
+      orElse: () => venues.first,
+    );
+  }
+
+  /// Returns appropriate seating zones for a given event category.
+  static List<SeatingZone> getZonesForCategory(String category) {
+    switch (category.toLowerCase()) {
+      case 'cricket':
+        return _cricketZones;
+      case 'football':
+      case 'soccer':
+        return _footballZones;
+      case 'tennis':
+        return _tennisZones;
+      case 'basketball':
+        return _basketballZones;
+      case 'baseball':
+        return _baseballZones;
+      case 'hockey':
+        return _hockeyZones;
+      case 'boxing':
+      case 'mma':
+        return _boxingZones;
+      case 'concert':
+      case 'music':
+        return _concertZones;
+      case 'theatre':
+      case 'theater':
+      case 'drama':
+        return _theatreZones;
+      case 'comedy':
+        return _comedyZones;
+      case 'esports':
+        return _esportsZones;
+      case 'formula1':
+      case 'motorsport':
+        return _formula1Zones;
+      default:
+        return _concertZones;
+    }
+  }
+
+  /// Default zones (concert layout) when no specific config is available.
+  static List<SeatingZone> get defaultZones => _concertZones;
+
+  // ── Cricket ────────────────────────────────────────────────
+  static const _cricketZones = <SeatingZone>[
+    SeatingZone(zoneId: 'north', zoneName: 'North Stand', color: Color(0xFF2196F3),
+        priceTier: 'General', priceAmount: 45, totalSeats: 70, availableSeats: 50, rows: 5, seatsPerRow: 14),
+    SeatingZone(zoneId: 'south', zoneName: 'South Stand', color: Color(0xFF42A5F5),
+        priceTier: 'General', priceAmount: 45, totalSeats: 70, availableSeats: 48, rows: 5, seatsPerRow: 14),
+    SeatingZone(zoneId: 'east', zoneName: 'East Stand', color: Color(0xFF4CAF50),
+        priceTier: 'Premium', priceAmount: 65, totalSeats: 48, availableSeats: 30, rows: 6, seatsPerRow: 8),
+    SeatingZone(zoneId: 'west', zoneName: 'West Stand', color: Color(0xFF66BB6A),
+        priceTier: 'Premium', priceAmount: 65, totalSeats: 48, availableSeats: 35, rows: 6, seatsPerRow: 8),
+    SeatingZone(zoneId: 'pavilion', zoneName: 'Pavilion', color: Color(0xFFFFD700),
+        priceTier: 'VIP', priceAmount: 120, totalSeats: 30, availableSeats: 15, rows: 3, seatsPerRow: 10, isVIP: true),
+    SeatingZone(zoneId: 'members', zoneName: 'Members', color: Color(0xFF9C27B0),
+        priceTier: 'Platinum', priceAmount: 200, totalSeats: 16, availableSeats: 8, rows: 2, seatsPerRow: 8, isVIP: true),
+  ];
+
+  // ── Football ──────────────────────────────────────────────
+  static const _footballZones = <SeatingZone>[
+    SeatingZone(zoneId: 'north', zoneName: 'North Stand', color: Color(0xFF2196F3),
+        priceTier: 'General', priceAmount: 50, totalSeats: 84, availableSeats: 55, rows: 6, seatsPerRow: 14),
+    SeatingZone(zoneId: 'south', zoneName: 'South Stand', color: Color(0xFF42A5F5),
+        priceTier: 'General', priceAmount: 50, totalSeats: 84, availableSeats: 52, rows: 6, seatsPerRow: 14),
+    SeatingZone(zoneId: 'east', zoneName: 'East Stand', color: Color(0xFF4CAF50),
+        priceTier: 'Premium', priceAmount: 75, totalSeats: 60, availableSeats: 35, rows: 6, seatsPerRow: 10),
+    SeatingZone(zoneId: 'west', zoneName: 'West Stand', color: Color(0xFF66BB6A),
+        priceTier: 'Premium', priceAmount: 75, totalSeats: 60, availableSeats: 38, rows: 6, seatsPerRow: 10),
+    SeatingZone(zoneId: 'nw_corner', zoneName: 'NW Corner', color: Color(0xFF00BCD4),
+        priceTier: 'Standard', priceAmount: 40, totalSeats: 24, availableSeats: 18, rows: 4, seatsPerRow: 6),
+    SeatingZone(zoneId: 'se_corner', zoneName: 'SE Corner', color: Color(0xFF00BCD4),
+        priceTier: 'Standard', priceAmount: 40, totalSeats: 24, availableSeats: 16, rows: 4, seatsPerRow: 6),
+  ];
+
+  // ── Tennis ────────────────────────────────────────────────
+  static const _tennisZones = <SeatingZone>[
+    SeatingZone(zoneId: 'north_baseline', zoneName: 'North Baseline', color: Color(0xFF2196F3),
+        priceTier: 'Court', priceAmount: 120, totalSeats: 48, availableSeats: 30, rows: 4, seatsPerRow: 12),
+    SeatingZone(zoneId: 'south_baseline', zoneName: 'South Baseline', color: Color(0xFF42A5F5),
+        priceTier: 'Court', priceAmount: 120, totalSeats: 48, availableSeats: 28, rows: 4, seatsPerRow: 12),
+    SeatingZone(zoneId: 'east_court', zoneName: 'East Court', color: Color(0xFF4CAF50),
+        priceTier: 'Premium', priceAmount: 180, totalSeats: 40, availableSeats: 22, rows: 5, seatsPerRow: 8),
+    SeatingZone(zoneId: 'west_court', zoneName: 'West Court', color: Color(0xFF66BB6A),
+        priceTier: 'Premium', priceAmount: 180, totalSeats: 40, availableSeats: 25, rows: 5, seatsPerRow: 8),
+    SeatingZone(zoneId: 'royal_box', zoneName: 'Royal Box', color: Color(0xFFFFD700),
+        priceTier: 'VIP', priceAmount: 380, totalSeats: 12, availableSeats: 4, rows: 2, seatsPerRow: 6, isVIP: true),
+    SeatingZone(zoneId: 'debenture', zoneName: 'Debenture', color: Color(0xFF9C27B0),
+        priceTier: 'Debenture', priceAmount: 250, totalSeats: 24, availableSeats: 12, rows: 3, seatsPerRow: 8, isVIP: true),
+  ];
+
+  // ── Basketball ────────────────────────────────────────────
+  static const _basketballZones = <SeatingZone>[
+    SeatingZone(zoneId: 'courtside', zoneName: 'Courtside', color: Color(0xFFFFD700),
+        priceTier: 'Courtside', priceAmount: 1200, totalSeats: 24, availableSeats: 8, rows: 2, seatsPerRow: 12, isVIP: true),
+    SeatingZone(zoneId: 'lower_east', zoneName: 'Lower East', color: Color(0xFFFF9800),
+        priceTier: 'Lower', priceAmount: 350, totalSeats: 60, availableSeats: 35, rows: 5, seatsPerRow: 12),
+    SeatingZone(zoneId: 'lower_west', zoneName: 'Lower West', color: Color(0xFFFFA726),
+        priceTier: 'Lower', priceAmount: 350, totalSeats: 60, availableSeats: 32, rows: 5, seatsPerRow: 12),
+    SeatingZone(zoneId: 'lower_north', zoneName: 'Lower North', color: Color(0xFF2196F3),
+        priceTier: 'Mid', priceAmount: 250, totalSeats: 56, availableSeats: 30, rows: 4, seatsPerRow: 14),
+    SeatingZone(zoneId: 'upper_north', zoneName: 'Upper North', color: Color(0xFF00BCD4),
+        priceTier: 'Upper', priceAmount: 150, totalSeats: 96, availableSeats: 65, rows: 6, seatsPerRow: 16),
+    SeatingZone(zoneId: 'upper_south', zoneName: 'Upper South', color: Color(0xFF26C6DA),
+        priceTier: 'Upper', priceAmount: 150, totalSeats: 96, availableSeats: 60, rows: 6, seatsPerRow: 16),
+  ];
+
+  // ── Baseball ──────────────────────────────────────────────
+  static const _baseballZones = <SeatingZone>[
+    SeatingZone(zoneId: 'home_plate', zoneName: 'Home Plate', color: Color(0xFF2196F3),
+        priceTier: 'Premium', priceAmount: 180, totalSeats: 50, availableSeats: 30, rows: 5, seatsPerRow: 10),
+    SeatingZone(zoneId: 'first_base', zoneName: 'First Base', color: Color(0xFF4CAF50),
+        priceTier: 'Field', priceAmount: 120, totalSeats: 50, availableSeats: 35, rows: 5, seatsPerRow: 10),
+    SeatingZone(zoneId: 'third_base', zoneName: 'Third Base', color: Color(0xFF66BB6A),
+        priceTier: 'Field', priceAmount: 120, totalSeats: 50, availableSeats: 33, rows: 5, seatsPerRow: 10),
+    SeatingZone(zoneId: 'lf_bleachers', zoneName: 'Left Field', color: Color(0xFFFF9800),
+        priceTier: 'Bleacher', priceAmount: 65, totalSeats: 72, availableSeats: 50, rows: 6, seatsPerRow: 12),
+    SeatingZone(zoneId: 'rf_bleachers', zoneName: 'Right Field', color: Color(0xFFFFA726),
+        priceTier: 'Bleacher', priceAmount: 65, totalSeats: 72, availableSeats: 48, rows: 6, seatsPerRow: 12),
+    SeatingZone(zoneId: 'upper_deck', zoneName: 'Upper Deck', color: Color(0xFF00BCD4),
+        priceTier: 'Upper', priceAmount: 45, totalSeats: 84, availableSeats: 62, rows: 6, seatsPerRow: 14),
+  ];
+
+  // ── Hockey ────────────────────────────────────────────────
+  static const _hockeyZones = <SeatingZone>[
+    SeatingZone(zoneId: 'north', zoneName: 'North End', color: Color(0xFF2196F3),
+        priceTier: 'End', priceAmount: 80, totalSeats: 60, availableSeats: 38, rows: 5, seatsPerRow: 12),
+    SeatingZone(zoneId: 'south', zoneName: 'South End', color: Color(0xFF42A5F5),
+        priceTier: 'End', priceAmount: 80, totalSeats: 60, availableSeats: 35, rows: 5, seatsPerRow: 12),
+    SeatingZone(zoneId: 'east', zoneName: 'East Side', color: Color(0xFF4CAF50),
+        priceTier: 'Side', priceAmount: 120, totalSeats: 50, availableSeats: 30, rows: 5, seatsPerRow: 10),
+    SeatingZone(zoneId: 'west', zoneName: 'West Side', color: Color(0xFF66BB6A),
+        priceTier: 'Side', priceAmount: 120, totalSeats: 50, availableSeats: 32, rows: 5, seatsPerRow: 10),
+    SeatingZone(zoneId: 'club_north', zoneName: 'Club North', color: Color(0xFFFFD700),
+        priceTier: 'Club', priceAmount: 200, totalSeats: 24, availableSeats: 10, rows: 3, seatsPerRow: 8, isVIP: true),
+    SeatingZone(zoneId: 'club_south', zoneName: 'Club South', color: Color(0xFFFFD700),
+        priceTier: 'Club', priceAmount: 200, totalSeats: 24, availableSeats: 12, rows: 3, seatsPerRow: 8, isVIP: true),
+  ];
+
+  // ── Boxing / MMA ──────────────────────────────────────────
+  static const _boxingZones = <SeatingZone>[
+    SeatingZone(zoneId: 'ringside_n', zoneName: 'Ringside North', color: Color(0xFFE53935),
+        priceTier: 'Ringside', priceAmount: 1200, totalSeats: 20, availableSeats: 8, rows: 2, seatsPerRow: 10, isVIP: true),
+    SeatingZone(zoneId: 'ringside_s', zoneName: 'Ringside South', color: Color(0xFFE53935),
+        priceTier: 'Ringside', priceAmount: 1200, totalSeats: 20, availableSeats: 6, rows: 2, seatsPerRow: 10, isVIP: true),
+    SeatingZone(zoneId: 'ringside_e', zoneName: 'Ringside East', color: Color(0xFFEF5350),
+        priceTier: 'Ringside', priceAmount: 1200, totalSeats: 20, availableSeats: 7, rows: 2, seatsPerRow: 10, isVIP: true),
+    SeatingZone(zoneId: 'ringside_w', zoneName: 'Ringside West', color: Color(0xFFEF5350),
+        priceTier: 'Ringside', priceAmount: 1200, totalSeats: 20, availableSeats: 9, rows: 2, seatsPerRow: 10, isVIP: true),
+    SeatingZone(zoneId: 'floor_n', zoneName: 'Floor North', color: Color(0xFFFF9800),
+        priceTier: 'Floor', priceAmount: 500, totalSeats: 48, availableSeats: 28, rows: 4, seatsPerRow: 12),
+    SeatingZone(zoneId: 'floor_s', zoneName: 'Floor South', color: Color(0xFFFFA726),
+        priceTier: 'Floor', priceAmount: 500, totalSeats: 48, availableSeats: 30, rows: 4, seatsPerRow: 12),
+    SeatingZone(zoneId: 'lower_e', zoneName: 'Lower East', color: Color(0xFF2196F3),
+        priceTier: 'Lower', priceAmount: 280, totalSeats: 70, availableSeats: 45, rows: 5, seatsPerRow: 14),
+    SeatingZone(zoneId: 'lower_w', zoneName: 'Lower West', color: Color(0xFF42A5F5),
+        priceTier: 'Lower', priceAmount: 280, totalSeats: 70, availableSeats: 42, rows: 5, seatsPerRow: 14),
+  ];
+
+  // ── Concert ───────────────────────────────────────────────
+  static const _concertZones = <SeatingZone>[
+    SeatingZone(zoneId: 'pit', zoneName: 'Pit', color: Color(0xFFE53935),
+        priceTier: 'Pit', priceAmount: 250, totalSeats: 96, availableSeats: 55, rows: 6, seatsPerRow: 16),
+    SeatingZone(zoneId: 'floor_ga', zoneName: 'Floor GA', color: Color(0xFF2196F3),
+        priceTier: 'General', priceAmount: 89, totalSeats: 144, availableSeats: 95, rows: 8, seatsPerRow: 18),
+    SeatingZone(zoneId: 'floor_reserved', zoneName: 'Floor Reserved', color: Color(0xFF4CAF50),
+        priceTier: 'Reserved', priceAmount: 120, totalSeats: 96, availableSeats: 60, rows: 6, seatsPerRow: 16),
+    SeatingZone(zoneId: 'left_orch', zoneName: 'Left Orchestra', color: Color(0xFF00BCD4),
+        priceTier: 'Orchestra', priceAmount: 150, totalSeats: 60, availableSeats: 35, rows: 5, seatsPerRow: 12),
+    SeatingZone(zoneId: 'right_orch', zoneName: 'Right Orchestra', color: Color(0xFF26C6DA),
+        priceTier: 'Orchestra', priceAmount: 150, totalSeats: 60, availableSeats: 38, rows: 5, seatsPerRow: 12),
+    SeatingZone(zoneId: 'balcony', zoneName: 'Balcony', color: Color(0xFF9C27B0),
+        priceTier: 'Balcony', priceAmount: 65, totalSeats: 84, availableSeats: 60, rows: 6, seatsPerRow: 14),
+  ];
+
+  // ── Theatre ───────────────────────────────────────────────
+  static const _theatreZones = <SeatingZone>[
+    SeatingZone(zoneId: 'stalls', zoneName: 'Stalls', color: Color(0xFF2196F3),
+        priceTier: 'Stalls', priceAmount: 145, totalSeats: 84, availableSeats: 50, rows: 6, seatsPerRow: 14),
+    SeatingZone(zoneId: 'dress_circle', zoneName: 'Dress Circle', color: Color(0xFF4CAF50),
+        priceTier: 'Circle', priceAmount: 120, totalSeats: 60, availableSeats: 35, rows: 5, seatsPerRow: 12),
+    SeatingZone(zoneId: 'upper_circle', zoneName: 'Upper Circle', color: Color(0xFF00BCD4),
+        priceTier: 'Upper', priceAmount: 85, totalSeats: 60, availableSeats: 40, rows: 5, seatsPerRow: 12),
+    SeatingZone(zoneId: 'balcony', zoneName: 'Balcony', color: Color(0xFFFF9800),
+        priceTier: 'Balcony', priceAmount: 65, totalSeats: 56, availableSeats: 40, rows: 4, seatsPerRow: 14),
+    SeatingZone(zoneId: 'box_left', zoneName: 'Box Left', color: Color(0xFFFFD700),
+        priceTier: 'VIP', priceAmount: 275, totalSeats: 8, availableSeats: 4, rows: 2, seatsPerRow: 4, isVIP: true),
+    SeatingZone(zoneId: 'box_right', zoneName: 'Box Right', color: Color(0xFFFFD700),
+        priceTier: 'VIP', priceAmount: 275, totalSeats: 8, availableSeats: 3, rows: 2, seatsPerRow: 4, isVIP: true),
+  ];
+
+  // ── Comedy ────────────────────────────────────────────────
+  static const _comedyZones = <SeatingZone>[
+    SeatingZone(zoneId: 'front_tables', zoneName: 'Front Tables', color: Color(0xFFE53935),
+        priceTier: 'Front', priceAmount: 175, totalSeats: 24, availableSeats: 12, rows: 3, seatsPerRow: 8),
+    SeatingZone(zoneId: 'middle_tables', zoneName: 'Middle Tables', color: Color(0xFF2196F3),
+        priceTier: 'Middle', priceAmount: 95, totalSeats: 40, availableSeats: 25, rows: 4, seatsPerRow: 10),
+    SeatingZone(zoneId: 'bar_seating', zoneName: 'Bar Seating', color: Color(0xFF4CAF50),
+        priceTier: 'Bar', priceAmount: 55, totalSeats: 36, availableSeats: 28, rows: 3, seatsPerRow: 12),
+    SeatingZone(zoneId: 'balcony_rail', zoneName: 'Balcony Rail', color: Color(0xFF00BCD4),
+        priceTier: 'Balcony', priceAmount: 65, totalSeats: 20, availableSeats: 16, rows: 2, seatsPerRow: 10),
+  ];
+
+  // ── Esports ───────────────────────────────────────────────
+  static const _esportsZones = <SeatingZone>[
+    SeatingZone(zoneId: 'floor_standing', zoneName: 'Floor Standing', color: Color(0xFFE53935),
+        priceTier: 'Floor', priceAmount: 85, totalSeats: 96, availableSeats: 60, rows: 6, seatsPerRow: 16),
+    SeatingZone(zoneId: 'floor_reserved', zoneName: 'Floor Reserved', color: Color(0xFF2196F3),
+        priceTier: 'Reserved', priceAmount: 120, totalSeats: 70, availableSeats: 40, rows: 5, seatsPerRow: 14),
+    SeatingZone(zoneId: 'lower_tier', zoneName: 'Lower Tier', color: Color(0xFF4CAF50),
+        priceTier: 'Lower', priceAmount: 75, totalSeats: 70, availableSeats: 45, rows: 5, seatsPerRow: 14),
+    SeatingZone(zoneId: 'upper_tier', zoneName: 'Upper Tier', color: Color(0xFF00BCD4),
+        priceTier: 'Upper', priceAmount: 50, totalSeats: 96, availableSeats: 65, rows: 6, seatsPerRow: 16),
+    SeatingZone(zoneId: 'vip_lounge', zoneName: 'VIP Lounge', color: Color(0xFFFFD700),
+        priceTier: 'VIP', priceAmount: 200, totalSeats: 16, availableSeats: 8, rows: 2, seatsPerRow: 8, isVIP: true),
+    SeatingZone(zoneId: 'side_tier', zoneName: 'Side Tier', color: Color(0xFFFF9800),
+        priceTier: 'Side', priceAmount: 60, totalSeats: 48, availableSeats: 32, rows: 4, seatsPerRow: 12),
+  ];
+
+  // ── Formula 1 ─────────────────────────────────────────────
+  static const _formula1Zones = <SeatingZone>[
+    SeatingZone(zoneId: 'main_grandstand', zoneName: 'Main Grandstand', color: Color(0xFF2196F3),
+        priceTier: 'Main', priceAmount: 350, totalSeats: 96, availableSeats: 55, rows: 6, seatsPerRow: 16),
+    SeatingZone(zoneId: 'turn1', zoneName: 'Turn 1', color: Color(0xFF4CAF50),
+        priceTier: 'Turn', priceAmount: 280, totalSeats: 70, availableSeats: 40, rows: 5, seatsPerRow: 14),
+    SeatingZone(zoneId: 'hairpin', zoneName: 'Hairpin', color: Color(0xFFFF9800),
+        priceTier: 'Hairpin', priceAmount: 220, totalSeats: 48, availableSeats: 30, rows: 4, seatsPerRow: 12),
+    SeatingZone(zoneId: 'pit_straight', zoneName: 'Pit Straight', color: Color(0xFF00BCD4),
+        priceTier: 'Pit', priceAmount: 180, totalSeats: 50, availableSeats: 35, rows: 5, seatsPerRow: 10),
+    SeatingZone(zoneId: 'chicane', zoneName: 'Chicane', color: Color(0xFFE53935),
+        priceTier: 'Chicane', priceAmount: 200, totalSeats: 40, availableSeats: 25, rows: 4, seatsPerRow: 10),
+    SeatingZone(zoneId: 'podium_club', zoneName: 'Podium Club', color: Color(0xFFFFD700),
+        priceTier: 'VIP', priceAmount: 800, totalSeats: 16, availableSeats: 6, rows: 2, seatsPerRow: 8, isVIP: true),
   ];
 }
