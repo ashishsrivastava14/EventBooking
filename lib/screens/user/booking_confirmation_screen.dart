@@ -124,14 +124,15 @@ class BookingConfirmationScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    _infoRow('Event', booking.eventTitle),
+                    _infoRow('Event', booking.eventTitle, isDark: isDark),
                     _infoRow('Date',
-                        '${_monthName(booking.eventDate.month)} ${booking.eventDate.day}, ${booking.eventDate.year}'),
-                    _infoRow('Venue', booking.venue),
-                    _infoRow('Tier', booking.tierName),
-                    _infoRow('Seats', booking.seats.join(', ')),
-                    _infoRow('Total', '\$${booking.total.toStringAsFixed(2)}'),
-                    _infoRow('Payment', booking.paymentMethod),
+                        '${_monthName(booking.eventDate.month)} ${booking.eventDate.day}, ${booking.eventDate.year}',
+                        isDark: isDark),
+                    _infoRow('Venue', booking.venue, isDark: isDark),
+                    _infoRow('Tier', booking.tierName, isDark: isDark),
+                    _infoRow('Seats', booking.seats.join(', '), isDark: isDark),
+                    _infoRow('Total', '\$${booking.total.toStringAsFixed(2)}', isDark: isDark),
+                    _infoRow('Payment', booking.paymentMethod, isDark: isDark),
                   ],
                 ),
               ).animate().fadeIn(delay: 600.ms).slideY(begin: 0.1),
@@ -219,7 +220,7 @@ class BookingConfirmationScreen extends StatelessWidget {
     );
   }
 
-  Widget _infoRow(String label, String value) {
+  Widget _infoRow(String label, String value, {bool isDark = false}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Row(
@@ -229,9 +230,11 @@ class BookingConfirmationScreen extends StatelessWidget {
             width: 80,
             child: Text(
               label,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13,
-                color: AppColors.textSecondaryDark,
+                color: isDark
+                    ? AppColors.textSecondaryDark
+                    : AppColors.textSecondaryLight,
               ),
             ),
           ),
