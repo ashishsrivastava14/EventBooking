@@ -20,7 +20,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool _isLoading = true;
-  String _selectedCity = 'New York';
 
   @override
   void initState() {
@@ -57,7 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: AppColors.primary, size: 20),
                         const SizedBox(width: 4),
                         Text(
-                          _selectedCity,
+                          eventProv.selectedCity == 'All Cities'
+                              ? 'All Cities'
+                              : eventProv.selectedCity,
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -533,10 +534,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     .map((city) => ListTile(
                           leading: const Icon(Icons.location_city),
                           title: Text(city),
-                          selected: _selectedCity == city,
+                          selected: context.read<EventProvider>().selectedCity == city,
                           selectedColor: AppColors.primary,
                           onTap: () {
-                            setState(() => _selectedCity = city);
                             context.read<EventProvider>().setCity(city);
                             Navigator.pop(context);
                           },

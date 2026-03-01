@@ -20,11 +20,16 @@ class EventProvider extends ChangeNotifier {
   RangeValues get priceRange => _priceRange;
   String get sortBy => _sortBy;
 
+  List<EventModel> get _cityFilteredEvents {
+    if (_selectedCity == 'All Cities') return _events;
+    return _events.where((e) => e.city == _selectedCity).toList();
+  }
+
   List<EventModel> get featuredEvents =>
-      _events.where((e) => e.isFeatured).toList();
+      _cityFilteredEvents.where((e) => e.isFeatured).toList();
 
   List<EventModel> get trendingEvents =>
-      _events.where((e) => e.isTrending).toList();
+      _cityFilteredEvents.where((e) => e.isTrending).toList();
 
   List<EventModel> get weekendEvents {
     final now = DateTime.now();
@@ -32,7 +37,7 @@ class EventProvider extends ChangeNotifier {
     final nextSaturday = now.add(Duration(
         days: daysUntilSaturday == 0 ? 7 : daysUntilSaturday));
     final nextMonday = nextSaturday.add(const Duration(days: 2));
-    return _events
+    return _cityFilteredEvents
         .where((e) =>
             !e.date.isBefore(DateTime(
                 nextSaturday.year, nextSaturday.month, nextSaturday.day)) &&
