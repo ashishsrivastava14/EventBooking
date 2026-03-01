@@ -176,6 +176,12 @@ class _ExploreScreenState extends State<ExploreScreen> {
         builder: (_, scrollController) {
           return StatefulBuilder(
             builder: (context, setModalState) {
+              final isDark =
+                  Theme.of(context).brightness == Brightness.dark;
+              final unselectedChipColor =
+                  isDark ? AppColors.card : AppColors.cardLight;
+              final unselectedTextColor =
+                  isDark ? Colors.white : Colors.black87;
               return SingleChildScrollView(
                 controller: scrollController,
                 padding: const EdgeInsets.all(20),
@@ -212,8 +218,16 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           label: Text(cat),
                           selected: isSelected,
                           selectedColor: AppColors.primary,
+                          backgroundColor: unselectedChipColor,
+                          side: BorderSide(
+                            color: isDark
+                                ? Colors.white24
+                                : Colors.black26,
+                          ),
                           labelStyle: TextStyle(
-                            color: isSelected ? Colors.white : null,
+                            color: isSelected
+                                ? Colors.white
+                                : unselectedTextColor,
                           ),
                           onSelected: (_) {
                             eventProv.setCategory(cat);
@@ -276,8 +290,16 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           label: Text(s),
                           selected: isSelected,
                           selectedColor: AppColors.primary,
+                          backgroundColor: unselectedChipColor,
+                          side: BorderSide(
+                            color: isDark
+                                ? Colors.white24
+                                : Colors.black26,
+                          ),
                           labelStyle: TextStyle(
-                            color: isSelected ? Colors.white : null,
+                            color: isSelected
+                                ? Colors.white
+                                : unselectedTextColor,
                           ),
                           onSelected: (_) {
                             eventProv.setSortBy(s);
