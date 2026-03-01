@@ -101,6 +101,10 @@ class _LoginScreenState extends State<LoginScreen> {
           image: DecorationImage(
             image: AssetImage('assets/images/bg_splash_orange.png'),
             fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Color(0x66000000),
+              BlendMode.darken,
+            ),
           ),
         ),
         child: Center(
@@ -131,23 +135,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.all(28),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(32),
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.white.withValues(alpha: 0.18),
-                        Colors.white.withValues(alpha: 0.10),
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
+                    color: Colors.white.withValues(alpha: 0.95),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.08),
-                        blurRadius: 24,
+                        color: Colors.black.withValues(alpha: 0.18),
+                        blurRadius: 32,
                         offset: const Offset(0, 8),
                       ),
                     ],
                     border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.18),
+                      color: Colors.white,
                       width: 1.2,
                     ),
                   ),
@@ -159,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Color(0xFF1A1A2E),
                           letterSpacing: 1.1,
                         ),
                       ).animate().fadeIn(duration: 400.ms).slideX(begin: -0.1),
@@ -168,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         'Sign in to continue booking events',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white.withValues(alpha: 0.8),
+                          color: Color(0xFF1A1A2E).withValues(alpha: 0.65),
                         ),
                       ).animate().fadeIn(delay: 100.ms, duration: 400.ms),
                       const SizedBox(height: 32),
@@ -179,13 +176,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             TextFormField(
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
-                              style: const TextStyle(color: Colors.white),
+                              style: const TextStyle(color: Color(0xFF1A1A2E)),
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Colors.white.withValues(alpha: 0.08),
+                                fillColor: const Color(0xFFF5F5F5),
                                 hintText: 'Email address',
-                                hintStyle: TextStyle(color: Colors.white70),
-                                prefixIcon: const Icon(Icons.email_outlined, color: Colors.white),
+                                hintStyle: const TextStyle(color: Color(0xFF9E9E9E)),
+                                prefixIcon: const Icon(Icons.email_outlined, color: Color(0xFF757575)),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(16),
                                   borderSide: BorderSide.none,
@@ -205,19 +202,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             TextFormField(
                               controller: _passwordController,
                               obscureText: _obscurePassword,
-                              style: const TextStyle(color: Colors.white),
+                              style: const TextStyle(color: Color(0xFF1A1A2E)),
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Colors.white.withValues(alpha: 0.08),
+                                fillColor: const Color(0xFFF5F5F5),
                                 hintText: 'Password',
-                                hintStyle: TextStyle(color: Colors.white70),
-                                prefixIcon: const Icon(Icons.lock_outline, color: Colors.white),
+                                hintStyle: const TextStyle(color: Color(0xFF9E9E9E)),
+                                prefixIcon: const Icon(Icons.lock_outline, color: Color(0xFF757575)),
                                 suffixIcon: IconButton(
                                   icon: Icon(
                                     _obscurePassword
                                         ? Icons.visibility_off
                                         : Icons.visibility,
-                                    color: Colors.white,
+                                    color: const Color(0xFF757575),
                                   ),
                                   onPressed: () {
                                     setState(() => _obscurePassword = !_obscurePassword);
@@ -254,7 +251,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                     ),
                                     const SizedBox(width: 8),
-                                    const Text('Remember Me', style: TextStyle(fontSize: 13, color: Colors.white)),
+                                    const Text('Remember Me', style: TextStyle(fontSize: 13, color: Color(0xFF1A1A2E))),
                                   ],
                                 ),
                                 TextButton(
@@ -281,24 +278,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 24),
                       Row(
                         children: [
-                          Expanded(
+                          const Expanded(
                             child: Divider(
-                              color: Colors.white.withValues(alpha: 0.18),
+                              color: Color(0xFFDDDDDD),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
                             child: Text(
                               'or continue with',
                               style: TextStyle(
                                 fontSize: 13,
-                                color: Colors.white.withValues(alpha: 0.8),
+                                color: Color(0xFF9E9E9E),
                               ),
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             child: Divider(
-                              color: Colors.white.withValues(alpha: 0.18),
+                              color: Color(0xFFDDDDDD),
                             ),
                           ),
                         ],
@@ -315,10 +312,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 );
                               },
-                              icon: const FaIcon(FontAwesomeIcons.google, size: 18, color: Colors.white),
-                              label: const Text('Google', style: TextStyle(color: Colors.white)),
+                              icon: const FaIcon(FontAwesomeIcons.google, size: 18, color: Color(0xFF1A1A2E)),
+                              label: const Text('Google', style: TextStyle(color: Color(0xFF1A1A2E))),
                               style: OutlinedButton.styleFrom(
-                                side: const BorderSide(color: Colors.white24),
+                                side: const BorderSide(color: Color(0xFFCCCCCC)),
                                 padding: const EdgeInsets.symmetric(vertical: 14),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
@@ -336,10 +333,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 );
                               },
-                              icon: const FaIcon(FontAwesomeIcons.apple, size: 18, color: Colors.white),
-                              label: const Text('Apple', style: TextStyle(color: Colors.white)),
+                              icon: const FaIcon(FontAwesomeIcons.apple, size: 18, color: Color(0xFF1A1A2E)),
+                              label: const Text('Apple', style: TextStyle(color: Color(0xFF1A1A2E))),
                               style: OutlinedButton.styleFrom(
-                                side: const BorderSide(color: Colors.white24),
+                                side: const BorderSide(color: Color(0xFFCCCCCC)),
                                 padding: const EdgeInsets.symmetric(vertical: 14),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
@@ -356,7 +353,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: RichText(
                             text: TextSpan(
                               text: "Don't have an account? ",
-                              style: const TextStyle(color: Colors.white70),
+                              style: const TextStyle(color: Color(0xFF555555)),
                               children: const [
                                 TextSpan(
                                   text: 'Sign Up',
@@ -374,9 +371,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       Center(
                         child: Text(
                           'Admin? Use admin@app.com',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 11,
-                            color: Colors.white.withValues(alpha: 0.5),
+                            color: Color(0xFFAAAAAA),
                           ),
                         ),
                       ),
