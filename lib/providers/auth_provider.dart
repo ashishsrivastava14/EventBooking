@@ -142,6 +142,50 @@ class AuthProvider extends ChangeNotifier {
     return true;
   }
 
+  Future<bool> signInWithGoogle() async {
+    _isLoading = true;
+    notifyListeners();
+
+    // Simulate network delay for social sign-in
+    await Future.delayed(const Duration(seconds: 1));
+
+    _currentUser = MockData.users.firstWhere(
+      (u) => !u.isAdmin,
+      orElse: () => MockData.users.last,
+    );
+
+    _isAuthenticated = true;
+    _isLoading = false;
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userEmail', _currentUser!.email);
+
+    notifyListeners();
+    return true;
+  }
+
+  Future<bool> signInWithApple() async {
+    _isLoading = true;
+    notifyListeners();
+
+    // Simulate network delay for social sign-in
+    await Future.delayed(const Duration(seconds: 1));
+
+    _currentUser = MockData.users.firstWhere(
+      (u) => !u.isAdmin,
+      orElse: () => MockData.users.last,
+    );
+
+    _isAuthenticated = true;
+    _isLoading = false;
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userEmail', _currentUser!.email);
+
+    notifyListeners();
+    return true;
+  }
+
   Future<void> logout() async {
     _currentUser = null;
     _isAuthenticated = false;

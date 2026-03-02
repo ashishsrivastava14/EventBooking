@@ -129,6 +129,22 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  Future<void> _signInWithGoogle() async {
+    final auth = context.read<AuthProvider>();
+    final success = await auth.signInWithGoogle();
+    if (success && mounted) {
+      context.go('/home');
+    }
+  }
+
+  Future<void> _signInWithApple() async {
+    final auth = context.read<AuthProvider>();
+    final success = await auth.signInWithApple();
+    if (success && mounted) {
+      context.go('/home');
+    }
+  }
+
   void _showForgotPassword() {
     final resetEmailController = TextEditingController();
     showDialog(
@@ -778,22 +794,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       size: 17,
                                       color: Color(0xFFEA4335),
                                     ),
-                                    onPressed: () {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: const Text(
-                                              'Google Sign-In (UI only)'),
-                                          behavior:
-                                              SnackBarBehavior.floating,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(
-                                                    12),
-                                          ),
-                                        ),
-                                      );
-                                    },
+                                    onPressed: auth.isLoading
+                                        ? () {}
+                                        : _signInWithGoogle,
                                   ),
                                   const SizedBox(width: 14),
                                   _socialButton(
@@ -803,22 +806,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       size: 19,
                                       color: Colors.white,
                                     ),
-                                    onPressed: () {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: const Text(
-                                              'Apple Sign-In (UI only)'),
-                                          behavior:
-                                              SnackBarBehavior.floating,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(
-                                                    12),
-                                          ),
-                                        ),
-                                      );
-                                    },
+                                    onPressed: auth.isLoading
+                                        ? () {}
+                                        : _signInWithApple,
                                   ),
                                 ],
                               ).animate().fadeIn(
