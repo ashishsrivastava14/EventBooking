@@ -72,7 +72,7 @@ class _HockeyRinkPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final w = size.width;
     final h = size.height;
-    final cornerR = 60.0;
+    const cornerR = 60.0;
 
     // White ice surface
     final icePaint = Paint()..color = const Color(0xFFE8EAF6);

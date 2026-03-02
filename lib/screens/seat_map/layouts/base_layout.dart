@@ -183,8 +183,8 @@ abstract class BaseLayout extends StatelessWidget {
 
   /// Seat grid – shows individual seats for a zone.
   Widget buildSeatGrid(SeatingZone zone) {
-    final seatSize = 22.0;
-    final seatMargin = 1.5;
+    const seatSize = 22.0;
+    const seatMargin = 1.5;
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(

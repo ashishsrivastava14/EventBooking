@@ -120,8 +120,8 @@ class _FootballFieldPainter extends CustomPainter {
     canvas.drawCircle(Offset(w / 2, h / 2), 3, dotPaint);
 
     // Penalty boxes (18-yard)
-    final penaltyW = 150.0;
-    final penaltyH = 70.0;
+    const penaltyW = 150.0;
+    const penaltyH = 70.0;
     // Top
     canvas.drawRect(
       Rect.fromLTWH(
@@ -136,8 +136,8 @@ class _FootballFieldPainter extends CustomPainter {
     );
 
     // Goal boxes (6-yard)
-    final goalBoxW = 70.0;
-    final goalBoxH = 30.0;
+    const goalBoxW = 70.0;
+    const goalBoxH = 30.0;
     canvas.drawRect(
       Rect.fromLTWH(w / 2 - goalBoxW / 2, 10, goalBoxW, goalBoxH),
       linePaint,
@@ -179,7 +179,7 @@ class _FootballFieldPainter extends CustomPainter {
     );
 
     // Corner arcs
-    final cornerR = 12.0;
+    const cornerR = 12.0;
     canvas.drawArc(
         Rect.fromLTWH(10 - cornerR, 10 - cornerR, cornerR * 2, cornerR * 2),
         0, pi / 2, false, linePaint);

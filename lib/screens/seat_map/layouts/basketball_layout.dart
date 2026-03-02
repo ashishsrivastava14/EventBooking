@@ -147,8 +147,8 @@ class _BasketballCourtPainter extends CustomPainter {
     );
 
     // Paint/key area (left)
-    final keyW = 70.0;
-    final keyH = 120.0;
+    const keyW = 70.0;
+    const keyH = 120.0;
     canvas.drawRect(
         Rect.fromLTWH(5, h / 2 - keyH / 2, keyW, keyH), linePaint);
 

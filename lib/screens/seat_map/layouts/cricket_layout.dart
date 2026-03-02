@@ -108,8 +108,8 @@ class _CricketFieldPainter extends CustomPainter {
     );
 
     // Pitch (center rectangle)
-    final pitchW = 24.0;
-    final pitchH = 100.0;
+    const pitchW = 24.0;
+    const pitchH = 100.0;
     final pitchRect = Rect.fromCenter(
       center: center,
       width: pitchW,

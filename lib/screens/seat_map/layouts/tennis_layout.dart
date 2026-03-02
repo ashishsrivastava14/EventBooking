@@ -98,7 +98,7 @@ class _TennisCourtPainter extends CustomPainter {
     canvas.drawRect(courtRect, linePaint);
 
     // Singles sidelines
-    final singlesInset = 20.0;
+    const singlesInset = 20.0;
     canvas.drawLine(
         Offset(40 + singlesInset, 30),
         Offset(40 + singlesInset, h - 30),

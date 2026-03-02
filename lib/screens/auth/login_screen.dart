@@ -327,9 +327,9 @@ class _LoginScreenState extends State<LoginScreen> {
           // ── Layer 2: Subtle background image texture ──────────────
           Positioned.fill(
             child: Opacity(
-              opacity: 0.12,
+              opacity: 0.62,
               child: Image.asset(
-                'assets/images/dark_bg1.png',
+                'assets/images/venue_o2_arena.jpg',
                 fit: BoxFit.cover,
               ),
             ),

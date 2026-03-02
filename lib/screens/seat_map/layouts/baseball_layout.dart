@@ -104,7 +104,7 @@ class _BaseballFieldPainter extends CustomPainter {
 
     // Infield dirt
     final dirtPaint = Paint()..color = const Color(0xFFD2B48C);
-    final infieldSize = 140.0;
+    const infieldSize = 140.0;
     canvas.drawCircle(
         Offset(cx, homeY - infieldSize * 1.1), infieldSize * 0.9, dirtPaint);
 
